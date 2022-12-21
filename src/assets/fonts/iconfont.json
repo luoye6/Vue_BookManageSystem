@@ -1,0 +1,100 @@
+{
+  "id": "3820793",
+  "name": "BookManageIcons",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "图书管理系统的图标库",
+  "glyphs": [
+    {
+      "icon_id": "1260",
+      "name": "好友",
+      "font_class": "haoyou",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "11810477",
+      "name": "管理员",
+      "font_class": "guanliyuan",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "6446244",
+      "name": "密码（关）",
+      "font_class": "tianchongxing-",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "54854",
+      "name": "天猫公告",
+      "font_class": "gonggao",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "673798",
+      "name": "首页_fill",
+      "font_class": "shouyefill",
+      "unicode": "e6ca",
+      "unicode_decimal": 59082
+    },
+    {
+      "icon_id": "2076426",
+      "name": "搜索小",
+      "font_class": "sousuoxiao",
+      "unicode": "e8d6",
+      "unicode_decimal": 59606
+    },
+    {
+      "icon_id": "2129721",
+      "name": "图书期刊",
+      "font_class": "tushuqikan",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "3267400",
+      "name": "留言",
+      "font_class": "liuyan",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "7738011",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "10359979",
+      "name": "个人信息",
+      "font_class": "gerenxinxi",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "11372764",
+      "name": "公告",
+      "font_class": "gonggao1",
+      "unicode": "e8c4",
+      "unicode_decimal": 59588
+    },
+    {
+      "icon_id": "13584358",
+      "name": "规则设置",
+      "font_class": "guizeshezhi",
+      "unicode": "e6dc",
+      "unicode_decimal": 59100
+    },
+    {
+      "icon_id": "16102269",
+      "name": "违章查询",
+      "font_class": "weizhangchaxun",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    }
+  ]
+}

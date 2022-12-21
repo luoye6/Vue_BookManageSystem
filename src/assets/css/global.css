@@ -1,0 +1,111 @@
+/* 全局样式表 */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+html,
+body,
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    min-width: 1366px;
+}
+
+/* body {
+    cursor:url(../images/konglong.ico),auto;
+} */
+ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.el-breadcrumb {
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.el-card {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
+
+.el-table {
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+.el-pagination {
+    margin-top: 15px;
+}
+
+.el-cascader-menu {
+    height: 400px;
+}
+
+.el-steps {
+    margin: 15px 0;
+}
+
+.el-step__title {
+    font-size: 13px;
+}
+
+.ql-editor {
+    min-height: 300px;
+}
+
+body {
+    position: relative;
+    /* cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur), default; */
+}
+
+.el-main {
+    margin: 0px;
+    padding: 0px;
+}
+
+.yibai {
+    margin-top: 100px;
+}
+
+.erbai {
+    margin-top: 120px;
+}
+
+.sanbai {
+    margin-top: 140px;
+}
+
+.sibai {
+    margin-top: 160px;
+}
+
+.wubai {
+    margin-top: 180px;
+}
+
+.liubai {
+    margin-top: 200px;
+}
+
+.qibai {
+    margin-top: 220px;
+}
+
+.babai {
+    margin-top: 240px;
+}
+
+.jiubai {
+    margin-top: 260px;
+}
+
+.yiqian {
+    margin-top: 300px;
+}
