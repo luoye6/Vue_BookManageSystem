@@ -1,9 +1,8 @@
 @font-face {
-  font-family: "iconfont";
-  /* Project id 3820793 */
-  src: url('iconfont.woff2?t=1671093443131') format('woff2'),
-    url('iconfont.woff?t=1671093443131') format('woff'),
-    url('iconfont.ttf?t=1671093443131') format('truetype');
+  font-family: "iconfont"; /* Project id 3820793 */
+  src: url('iconfont.woff2?t=1672483284386') format('woff2'),
+       url('iconfont.woff?t=1672483284386') format('woff'),
+       url('iconfont.ttf?t=1672483284386') format('truetype');
 }
 
 .iconfont {
@@ -14,20 +13,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-guanliyuanrenzheng:before {
+  content: "\eacc";
+  font-size: 48px !important;
+  color:white !important;
+}
+
 .icon-haoyou:before {
   content: "\e602";
-  font-size: 50px;
-  /* font-weight: 700; */
-  color:white;
-
+  font-size: 48px !important;
+  color:white !important;
 }
 
 .icon-guanliyuan:before {
   content: "\e681";
-  font-size: 50px;
-  /* font-weight: 700; */
-  color:white;
-
+  font-size: 48px !important;
+  color:white !important;
 }
 
 .icon-tianchongxing-:before {
@@ -64,17 +65,13 @@
 
 .icon-gonggao1:before {
   content: "\e8c4";
-
 }
 
 .icon-guizeshezhi:before {
-
   content: "\e6dc";
-
 }
 
 .icon-weizhangchaxun:before {
-
   content: "\e607";
-
 }
+

@@ -61,7 +61,7 @@
     <div class="footer">
       <span><i class="iconfont icon-haoyou" @click="goUser"></i></span>
       <span>
-        <!-- <i class="iconfont icon-guanliyuan" @click="goManage"></i> -->
+        <i class="iconfont icon-guanliyuanrenzheng" @click="goAdmin"></i>
       </span>
     </div>
   </div>
@@ -73,7 +73,7 @@ export default {
     return {
       //登录表单
       loginForm: {
-        username: "相思断红肠",
+        username: "admin",
         password: "123456",
       },
       //登录表单规则的验证对象
@@ -115,16 +115,16 @@ export default {
           message: "登录成功",
           duration: 800,
         });
-        this.$router.push('/home')
-        window.sessionStorage.setItem("token", token);
-        this.$router.push("/home"); //跳转到home页面下
+        this.$router.push('/homemange')
+        // window.sessionStorage.setItem("token", token);
+        // this.$router.push("/home"); //跳转到home页面下
       });
     },
     goUser(){
       this.$router.push('/login');
     },
-    goManage(){
-      this.$router.push('/loginmanage');
+    goAdmin(){
+      this.$router.push('/loginadmin');
     }
   },
 };

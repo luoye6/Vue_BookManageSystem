@@ -62,7 +62,9 @@
       <span>
         <!-- <i class="iconfont icon-haoyou " @click="goUser"></i> -->
       </span>
-      <span><i class="iconfont icon-guanliyuan" @click="goManage"></i></span>
+      <span>
+        <i class="iconfont icon-guanliyuan" @click="goManage"></i>
+      </span>
     </div>
   </div>
 </template>

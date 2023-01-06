@@ -6,6 +6,13 @@
   "description": "图书管理系统的图标库",
   "glyphs": [
     {
+      "icon_id": "5387410",
+      "name": "管理员认证",
+      "font_class": "guanliyuanrenzheng",
+      "unicode": "eacc",
+      "unicode_decimal": 60108
+    },
+    {
       "icon_id": "1260",
       "name": "好友",
       "font_class": "haoyou",
