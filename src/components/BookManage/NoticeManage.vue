@@ -16,10 +16,10 @@
       </el-row>
       <!-- 表格区域 -->
       <el-table :data="tableData" border style="width: 100%" stripe>
-        <el-table-column prop="cardNumber" label="ID"> </el-table-column>
-        <el-table-column prop="bookNumber" label="标题"> </el-table-column>
-        <el-table-column prop="borrowDate" label="公告"> </el-table-column>
-        <el-table-column prop="closeDate" label="发布日期"> </el-table-column>
+        <el-table-column prop="noticeId" label="ID"> </el-table-column>
+        <el-table-column prop="noticeTitle" label="标题"> </el-table-column>
+        <el-table-column prop="noticeContent" label="公告"> </el-table-column>
+        <el-table-column prop="createTime" label="发布日期"> </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
@@ -33,7 +33,7 @@
                 type="primary"
                 icon="el-icon-edit"
                 size="mini"
-                @click="showEditDialog()"
+                @click="showEditDialog(scope.row.noticeId)"
               ></el-button
             ></el-tooltip>
 
@@ -48,7 +48,7 @@
                 type="danger"
                 icon="el-icon-delete"
                 size="mini"
-                @click="removeUserById()"
+                @click="removeUserById(scope.row.noticeId)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -58,11 +58,11 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[1, 2, 3, 4]"
-        :page-size="100"
+        :current-page="queryInfo.pageNum"
+        :page-sizes="[1, 2, 3, 4,5]"
+        :page-size="queryInfo.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="this.tableData.length"
+        :total="this.total"
       >
       </el-pagination>
       <!-- 修改公告的对话框 -->
@@ -90,7 +90,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="editDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="editDialogVisible = false"
+          <el-button type="primary" @click="editNoticeById"
             >确 定</el-button
           >
         </span>
@@ -120,7 +120,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="addDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addDialogVisible = false"
+          <el-button type="primary" @click="addNotice"
             >添加公告</el-button
           >
         </span>
@@ -133,66 +133,9 @@
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "选项1",
-          label: "借阅证号",
-        },
-        {
-          value: "选项2",
-          label: "图书编号",
-        },
-        {
-          value: "选项3",
-          label: "借阅日期",
-        },
-        {
-          value: "选项4",
-          label: "截止日期",
-        },
-      ],
-      value: "",
-      tableData: [
-        {
-          cardNumber: "1805010219",
-          bookNumber: "12378",
-          borrowDate: "2022-12-20 16:48:44",
-          closeDate: "2023-02-08 16:49:37",
-          operation: "2022-12-23 13:10:45",
-        },
-        {
-          cardNumber: "1805010219",
-          bookNumber: "12378",
-          borrowDate: "2022-12-20 16:48:44",
-          closeDate: "2023-02-08 16:49:37",
-          returnDate: "2022-12-23 13:10:45",
-          violationMessage: "",
-          violationAdmin: "root",
-        },
-        {
-          cardNumber: "1805010219",
-          bookNumber: "12378",
-          borrowDate: "2022-12-20 16:48:44",
-          closeDate: "2023-02-08 16:49:37",
-          returnDate: "2022-12-23 13:10:45",
-          violationMessage: "",
-          violationAdmin: "root",
-        },
-        {
-          cardNumber: "1805010219",
-          bookNumber: "12378",
-          borrowDate: "2022-12-20 16:48:44",
-          closeDate: "2023-02-08 16:49:37",
-          returnDate: "2022-12-23 13:10:45",
-          violationMessage: "",
-          violationAdmin: "root",
-        },
-      ],
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
-      input: "",
+    
+      tableData: [],
+      
       editDialogVisible: false,
       editForm: {
         noticeTitle: "",
@@ -215,7 +158,8 @@ export default {
       addDialogVisible:false,
       addForm:{
         noticeTitle:"",
-        noticeContent:""
+        noticeContent:"",
+        noticeAdminId:0
       },
       addFormRules:{
         noticeTitle: [
@@ -230,28 +174,54 @@ export default {
         noticeContent: [
           { required: true, message: "请输入公告内容", trigger: "blur" },
         ],
-      }
+      },
+      queryInfo: {
+        pageNum: 1,
+        pageSize: 5,
+      },
+      total: 0,
     };
   },
   methods: {
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.queryInfo.pageSize = val;
+      this.getNoticeList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.queryInfo.pageNum = val;
+      this.getNoticeList();
     },
     //让修改公告的对话框可见,并从数据库中回显数据
-    showEditDialog() {
+    async showEditDialog(id) {
+      const {data:res} = await this.$http.get('bookadmin/get_notice/'+id);
+      if(res.status !== 200){
+        return this.$message.error(res.msg)
+      }
+      console.log(res);
+      this.editForm = res.data;
       // 让修改公告的对话框可见
       this.editDialogVisible = true;
     },
     //监听修改对话框的关闭，一旦对话框关闭，就重置表单，回显数据
     editDialogClosed() {
       this.$refs.editFormRef.resetFields();
-      console.log("231");
+    },
+    // 修改公告根据公告id
+    async editNoticeById(){
+      const {data:res} = await this.$http.put('bookadmin/update_notice/'+this.editForm.noticeId,{
+        noticeTitle:this.editForm.noticeTitle,
+        noticeContent:this.editForm.noticeContent
+      })
+      if(res.status !== 200){
+        return this.$message.error(res.msg)
+      }
+      // 对话框不可见
+      this.editDialogVisible = false;
+      this.getNoticeList();
+      this.$message.success(res.msg)
     },
     //删除公告
-    async removeUserById() {
+    async removeUserById(id) {
       //弹框，询问用户是否删除数据
       const confirmResult = await this.$confirm(
         "此操作将永久删除该公告, 是否继续?",
@@ -271,6 +241,15 @@ export default {
         return this.$message.info("已经取消删除");
       }
       //如果用户确认删除，那么下一步就是发送axios请求，检查响应状态码是否成功,成功则返回删除成功，否则返回删除失败
+      const {data:res} = await this.$http.get('bookadmin/delete_notice/'+id)
+      if (res.status !== 200) {
+        return this.$message.error(res.msg);
+      }
+      this.$message.success({
+        message: res.msg,
+        duration: 1500,
+      });
+      this.getNoticeList();
     },
     //监听添加公告对话框的关闭，一旦对话框关闭，就重置表单
     addDialogClosed(){
@@ -279,8 +258,45 @@ export default {
     //当用户点击发送新公告时，让添加对话框的visible改为true
     showAddDialog(){
         this.addDialogVisible = true;
+    },
+    async getNoticeList(){
+      const {data:res} = await this.$http.post('bookadmin/get_noticelist',this.queryInfo)
+      // console.log(res);
+      
+      this.tableData = [];
+      if (res.status !== 200) {
+        this.total = 0;
+        return this.$message.error(res.msg);
+      }
+      this.$message.success({
+        message: res.msg,
+        duration: 1000,
+      });
+      this.tableData = res.data.records;
+      this.total = res.data.total;
+    },
+    async addNotice(){
+      // 取消可见性
+      this.addDialogVisible = false;
+      // 获取图书管理员id
+      this.addForm.noticeAdminId = parseInt(window.sessionStorage.getItem('bookAdminId'))
+      // 发送axios请求添加公告
+      const {data:res} = await this.$http.post('bookadmin/add_notice',this.addForm)
+      console.log(res);
+      if(res.status!== 200){
+        return this.$message.error(res.msg)
+      }
+      this.$message.success({
+        message:res.msg,
+        duration:1000
+      })
+      this.getNoticeList();
+
     }
   },
+  created(){
+    this.getNoticeList();
+  }
 };
 </script>
 

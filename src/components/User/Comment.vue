@@ -23,11 +23,15 @@
       <div class="addMain">
         <el-input
           placeholder="请输入内容"
-          v-model="input"
+          v-model.trim="input"
           class="input-with-select"
-          @keyup.enter.native = "addContent"
+          @keyup.enter.native="addContent"
         >
-          <el-button slot="append" icon="el-icon-edit" @click="addContent"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-edit"
+            @click="addContent"
+          ></el-button>
         </el-input>
       </div>
     </div>
@@ -50,89 +54,57 @@ export default {
       boxHeight: 200, //弹幕高度(测试不生效)
       throttleGap: 3000, //消息间隔
       input: "",
-      barrageList: [
-        {
-          id: 1,
-          avatar:
-            "https://img0.baidu.com/it/u=825023390,3429989944&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          msg: "祝你天天开心",
-          time: 5,
-          barrageStyle: "yibai",
-          type: MESSAGE_TYPE.NORMAL,
-        },
-        {
-          id: 2,
-          avatar:
-            "https://img0.baidu.com/it/u=825023390,3429989944&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          msg: "好好学习,天天向上",
-          time: 7,
-          barrageStyle: "erbai",
-          type: MESSAGE_TYPE.NORMAL,
-        },
-        {
-          id: 3,
-          avatar:
-            "https://img0.baidu.com/it/u=825023390,3429989944&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          msg: "学习如逆水行舟,不进则退",
-          time: 5,
-          barrageStyle: "sanbai",
-          type: MESSAGE_TYPE.NORMAL,
-        },
-        {
-          id: 4,
-          avatar:
-            "https://img0.baidu.com/it/u=825023390,3429989944&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          msg: "平凡的生活亦能有非凡的人生",
-          time: 8,
-          barrageStyle: "sibai",
-          type: MESSAGE_TYPE.NORMAL,
-        },
-        {
-          id: 5,
-          avatar:
-            "https://img0.baidu.com/it/u=825023390,3429989944&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          msg: "The only way to conquer a fear is to face it",
-          time: 7,
-          barrageStyle: "wubai",
-          type: MESSAGE_TYPE.NORMAL,
-        },
-      ], //弹幕列表，格式为数组
-    };
-  },
-  mounted() {
-    this.addToList();
-  },
-  methods: {
-    addToList() {
-      this.barrageList.forEach((v) => {
-        this.barrageList.push({
-          id: v.id, //弹幕ID
-          avatar: v.avatar, //头像
-          msg: v.msg, //弹幕消息
-          time: v.time, //屏幕展示时间
-          type: MESSAGE_TYPE.NORMAL, //类型
-          barrageStyle: v.barrageStyle, //自定义样式
-        });
-      });
-    },
-    addContent() {
-      this.barrageList.push({
-        id: nanoid(),
+      //弹幕列表，格式为数组
+      barrageList: [],
+      barrage: {
+        id: "",
         avatar:
           "https://img0.baidu.com/it/u=825023390,3429989944&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-        msg: this.input,
-        time: Math.round(Math.random() * 5) + 5,
-        barrageStyle: "wubai",
+        msg: "",
+        time: "",
         type: MESSAGE_TYPE.NORMAL,
-      });
-      this.input = "";
-      this.$message.success("添加留言成功");
-    },
+        barrageStyle: "",
+      },
+    };
   },
+  methods: {
+    async addContent() {
+      // 文本框中内容赋值给barrage
+      this.barrage.msg = this.input;
+      //向数据库发送请求 addComment
+      const {data:res} = await this.$http.post('user/add_comment',this.barrage);
+      if(res.status !== 200){
+        return this.$message.error(res.msg)
+      }
+      //调用获取新的留言列表
+      this.getCommentList();
+      //重置内容框
+      this.input = "";
+      this.$message.success(res.msg);
+    },
+    async getCommentList() {
+      // 发送axios请求
+      const { data: res } = await this.$http.get("user/get_commentlist");
+      // console.log(res);
+      if (res.status !== 200) {
+        return this.$message.error(res.msg);
+      }
+      this.$message.success(res.msg);
+      this.barrageList = res.data
+      //添加空对象，数组更新，组件更新
+      this.barrageList.push({})
+    },
+   
+  },
+ 
+  mounted(){
+    this.getCommentList();
+  }
 };
 </script>
 
 <style lang="less" scoped>
+
 .comment_container {
   position: relative;
   height: 100%;
@@ -151,14 +123,13 @@ export default {
 .barrages-drop {
   position: relative;
 }
-.addMain{
+.addMain {
   position: absolute;
-  width:300px;
+  width: 300px;
   height: 100%;
   background-color: pink;
-  top:450px;
-  left:50%;
-  transform: translate(-50%,-50%);
-
+  top: 450px;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

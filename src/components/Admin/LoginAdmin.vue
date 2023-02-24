@@ -20,7 +20,7 @@
           <!-- 用户名 -->
           <el-form-item prop="username">
             <el-input
-              v-model="loginForm.username"
+              v-model.trim="loginForm.username"
               prefix-icon="iconfont icon-gerenxinxi"
             ></el-input>
           </el-form-item>
@@ -30,6 +30,8 @@
               v-model="loginForm.password"
               prefix-icon="iconfont icon-tianchongxing-"
               type="password"
+              @keyup.enter.native="login"
+              :show-password="true"
             ></el-input>
           </el-form-item>
           <!-- 按钮区域 -->
@@ -64,6 +66,13 @@
           <!-- <i class="iconfont icon-guanliyuan" @click="goAdmin"></i> -->
         </span>
       </div>
+      <div class="footer2">
+      <p>
+        ©2022-2022 By 小白条<br /><a href="https://beian.miit.gov.cn"
+          >备案号:浙ICP备2022034182号</a
+        >
+      </p>
+    </div>
     </div>
   </template>
       
@@ -111,13 +120,16 @@
             return;
           }
           //向数据库发送axios请求，如果登录成功，就跳转
-          this.$message.success({
-            message: "登录成功",
-            duration: 800,
-          });
+          const {data:res} = await this.$http.post('admin/login',this.loginForm)
+          // console.log(res);
+          if(res.status !== 200){
+            return this.$message.error(res.msg);
+          }
+          this.$message.success('登录成功')
+          // console.log(res);
+          window.sessionStorage.setItem('token',res.map.token)
+          window.sessionStorage.setItem('adminId',res.map.id)
           this.$router.push('/homeadmin')
-          // window.sessionStorage.setItem("token", token);
-          // this.$router.push("/home"); //跳转到home页面下
         });
       },
       goUser(){
@@ -129,6 +141,15 @@
   </script>
       
       <style lang="less" scoped>
+      .footer2 {
+  position: absolute;
+  bottom: 0px;
+  left: 45%;
+  color: #ccc;
+  a {
+    color: #ccc;
+  }
+}
   .login_container {
     // background-color: #2b4b6b;
     background: url(https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/digitalCityMin.png)

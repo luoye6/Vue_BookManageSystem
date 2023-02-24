@@ -10,7 +10,7 @@
       <el-row>
         <el-col :span="6"
           >条件搜索:<el-select
-            v-model="value"
+            v-model="queryInfo.condition"
             filterable
             placeholder="请选择"
             style="margin-left: 15px"
@@ -27,25 +27,49 @@
         <el-col :span="4">
           <el-input
             placeholder="请输入内容"
-            v-model="input"
+            v-model="queryInfo.query"
             class="input-with-select"
+            @keyup.enter.native="getBorrowStatement"
           >
             <el-button
               slot="append"
               icon="el-icon-search"
+              @click="getBorrowStatement"
             ></el-button> </el-input
         ></el-col>
-        <el-col :span="4" style="float: right"> 导出Excel、PDF </el-col>
+        <el-col :span="2" style="float: right">
+          <download-excel
+            class="export-excel-wrapper"
+            :data="tableData"
+            :fields="json_fields"
+            :header="title"
+            name="借书报表.xls"
+          >
+            <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
+            <el-button type="primary" class="el-icon-printer" size="mini"
+              >导出Excel</el-button
+            >
+          </download-excel>
+        </el-col>
+        <el-col :span="2" style="float: right">
+          <el-button
+            type="primary"
+            class="el-icon-printer"
+            size="mini"
+            @click="downLoad"
+            >导出PDF</el-button
+          >
+        </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe>
-        <el-table-column prop="cardNumber" label="借阅证编号">
+      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'cardNumber', order: 'ascending'}">
+        <el-table-column prop="cardNumber" label="借阅证编号" sortable>
         </el-table-column>
-        <el-table-column prop="bookNumber" label="图书编号">
+        <el-table-column prop="bookNumber" label="图书编号" sortable>
         </el-table-column>
-        <el-table-column prop="borrowDate" label="借阅日期"> </el-table-column>
-        <el-table-column prop="closeDate" label="截止日期"> </el-table-column>
-        <el-table-column prop="returnDate" label="归还时间"> </el-table-column>
+        <el-table-column prop="borrowDate" label="借阅日期" sortable> </el-table-column>
+        <el-table-column prop="closeDate" label="截止日期" sortable> </el-table-column>
+        <el-table-column prop="returnDate" label="归还日期" sortable> </el-table-column>
         <el-table-column prop="violationMessage" label="违章信息"> </el-table-column>
         <el-table-column prop="violationAdmin" label="处理人"> </el-table-column>
       </el-table>
@@ -53,11 +77,11 @@
       <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[1, 2, 3, 4]"
-      :page-size="100"
+      :current-page="queryInfo.pageNum"
+      :page-sizes="[1, 2, 3, 4,5]"
+      :page-size="queryInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="this.tableData.length">
+      :total="this.total">
     </el-pagination>
     </el-card>
   </div>
@@ -69,35 +93,30 @@ export default {
     return {
       options: [
         {
-          value: "选项1",
+          value: "card_number",
           label: "借阅证号",
         },
         {
-          value: "选项2",
+          value: "book_number",
           label: "图书编号",
         },
         {
-          value: "选项3",
+          value: "borrow_date",
           label: "借阅日期",
         },
         {
-          value: "选项4",
+          value: "close_date",
           label: "截止日期",
         },
         {
-          value: "选项5",
+          value: "return_date",
           label: "归还日期",
         },
         {
-          value: "选项6",
+          value: "violation_message",
           label: "违章信息",
         },
-        {
-          value: "选项7",
-          label: "处理人",
-        },
       ],
-      value: "",
       tableData: [{
         cardNumber: '1805010219',
         bookNumber: '12378',
@@ -131,22 +150,56 @@ export default {
         violationMessage:'',
         violationAdmin:'root',
         }, ],
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4,
-        input:'',
-
+        queryInfo: {
+        pageNum: 1,
+        pageSize: 5,
+        condition: "",
+        query: "",
+      },
+      total: 0,
+      title: "借书报表",
+      json_fields: {
+        借阅证编号: "cardNumber",
+        图书编号: "bookNumber",
+        借阅日期: "borrowDate",
+        截止日期: "closeDate",
+        归还日期: "returnDate",
+        违章信息:"violationMessage",
+        处理人:"violationAdmin"
+      },
     };
   },
   methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.queryInfo.pageSize = val;
+        this.getBorrowStatement();
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.queryInfo.pageNum = val;
+        this.getBorrowStatement();
+      },
+      async getBorrowStatement(){
+        const {data:res} = await this.$http.post('bookadmin/get_borrow_statement',this.queryInfo)
+        // console.log(res);
+        this.tableData = [];
+      if (res.status !== 200) {
+        this.total = 0;
+        return this.$message.error(res.msg);
       }
+      this.$message.success({
+        message: res.msg,
+        duration: 1000,
+      });
+      this.tableData = res.data.records;
+      this.total = res.data.total;
+      },
+      downLoad() {
+      this.getPdf(this.title); //参数是下载的pdf文件名
     },
+    },
+    created(){
+      this.getBorrowStatement();
+    }
 };
 </script>
 

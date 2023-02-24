@@ -16,19 +16,55 @@
     <div class="information_banner">
       <div class="information_banner_left">
         <div class="banner_left_main">
-          <div class="number"><i class="el-icon-collection-tag"></i>
-            借阅证编号: 1805010219</div>
-          <div class="name"><i class="iconfont icon-gerenxinxi"></i>
-            借阅证姓名: 百里屠苏</div>
-          <div class="rule"><i class="iconfont icon-guizeshezhi"></i>
-            规则编号: 18</div>
-          <div class="status"><i class="el-icon-refresh"></i>
-            状态: 可用</div>
+          <div class="number">
+            <i class="el-icon-collection-tag"></i> 借阅证编号:
+            {{ this.user.cardNumber }}
+          </div>
+          <div class="name">
+            <i class="iconfont icon-gerenxinxi"></i> 借阅证姓名:
+            {{ this.user.cardName }}
+          </div>
+          <div class="rule">
+            <i class="iconfont icon-guizeshezhi"></i> 规则编号:
+            {{ this.user.ruleNumber }}
+          </div>
+          <div class="status">
+            <i class="el-icon-refresh"></i> 状态:
+            {{ this.user.status === 1 ? "可用" : "禁用" }}
+          </div>
         </div>
       </div>
       <div class="information_banner_right">
-        <el-button type="primary" class="changePWD" @click="changePassword">修改密码</el-button>
+        <el-button type="primary" class="changePWD" @click="showEditDialog"
+          >修改密码</el-button
+        >
       </div>
+      <el-dialog
+        title="修改密码"
+        :visible.sync="editDialogVisible"
+        width="50%"
+        @close="editDialogClosed"
+      >
+        <el-form
+          :model="editForm"
+          ref="editFormRef"
+          :rules="editFormRules"
+          label-width="120px"
+        >
+          <el-form-item label="新密码" prop="password">
+            <el-input v-model="editForm.password" type="password" placeholder="请输入新密码"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码" prop="confirmPassword">
+            <el-input v-model="editForm.confirmPassword" type="password" placeholder="请再次输入新密码"></el-input>
+          </el-form-item> 
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="changePassword"
+            >确 定</el-button
+          >
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -36,12 +72,88 @@
 <script>
 export default {
   data() {
-    return {};
+    var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.editForm.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+    return {
+      user: {
+        ruleNumber: Number,
+        cardNumber: Number,
+        status: Number,
+        userId: Number,
+        cardName: "",
+        username: "",
+        password: "",
+        createTime: "",
+        updateTime: "",
+      },
+      editForm: {
+        password: "",
+        confirmPassword: "",
+      },
+      editFormRules:{
+        password:[
+          {required:true,message:"请输入新密码",trigger:"blur"},
+          {min:6,max:15,message:"新密码长度在6-15个字符",trigger:"blur"}
+        ],
+        confirmPassword:[
+          {validator:validatePass2,trigger:"blur"}
+        ]
+        
+    },
+    
+      editDialogVisible: false,
+    };
   },
   methods: {
-    changePassword(){
-      alert('修改密码成功');
+    //让修改公告的对话框可见,并从数据库中回显数据
+    showEditDialog() {
+      // 让修改公告的对话框可见
+      this.editDialogVisible = true;
+    },
+    //监听修改对话框的关闭，一旦对话框关闭，就重置表单，回显数据
+    editDialogClosed() {
+      this.$refs.editFormRef.resetFields();
+    },
+    async getUserInformaton() {
+      // 先从sessionStorage中获取用户id
+      const userId = window.sessionStorage.getItem("userId");
+      // 发送axios请求，携带用户id，获取个人信息
+      const { data: res } = await this.$http.get(
+        "user/get_information/" + userId
+      );
+      if (res.status !== 200) {
+        return this.$message.error(res.msg);
+      }
+      this.$message.success({
+        message: res.msg,
+        duration: 1000,
+      });
+      this.user = res.data;
+    },
+    async changePassword(){
+      const {data:res} = await this.$http.post('user/update_password',{
+        password:this.editForm.password,
+        userId:window.sessionStorage.getItem('userId')
+      })
+      if(res.status !== 200){
+        return this.$message.error(res.msg);
+      }
+      this.$message.success(res.msg)
+      this.editDialogVisible = false;
+      this.$refs.editFormRef.resetFields();
+      window.sessionStorage.clear();
+      this.$router.push("/login");
     }
+  },
+  created() {
+    this.getUserInformaton();
   },
 };
 </script>
@@ -93,16 +205,16 @@ export default {
   }
 }
 .banner_left_main {
-  margin-top:120px;
-  color:black;
+  margin-top: 120px;
+  color: black;
   font-size: 20px;
   div {
-    margin-top:15px;
+    margin-top: 15px;
   }
 }
-.changePWD{
-  position:absolute;
-  top:50%;
-  left:50%;
+.changePWD {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 </style>

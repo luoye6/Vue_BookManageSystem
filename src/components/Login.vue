@@ -20,7 +20,7 @@
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input
-            v-model="loginForm.username"
+            v-model.trim="loginForm.username"
             prefix-icon="iconfont icon-gerenxinxi"
           ></el-input>
         </el-form-item>
@@ -30,6 +30,8 @@
             v-model="loginForm.password"
             prefix-icon="iconfont icon-tianchongxing-"
             type="password"
+            @keyup.enter.native="login"
+            :show-password="true"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
@@ -65,6 +67,13 @@
       <span>
         <i class="iconfont icon-guanliyuan" @click="goManage"></i>
       </span>
+    </div>
+    <div class="footer2">
+      <p>
+        ©2022-2022 By 小白条<br /><a href="https://beian.miit.gov.cn"
+          >备案号:浙ICP备2022034182号</a
+        >
+      </p>
     </div>
   </div>
 </template>
@@ -112,25 +121,19 @@ export default {
         if (!valid) {
           return;
         }
-        if (
-          this.loginForm.username === "相思断红肠" &&
-          this.loginForm.password === "123456"
-        ) {
-          this.$message.success({
-            message: "登录成功",
-            duration: 800,
-          });
-          this.$router.push('/home');
-        } else {
-          this.$message.error({
-            message: "用户名或密码错误",
-            duration: 800,
-          });
-        }
         //向数据库发送axios请求，如果登录成功，就跳转
-
-        // window.sessionStorage.setItem("token", token);
-        // this.$router.push("/home"); //跳转到home页面下
+        const { data: res } = await this.$http.post(
+          "user/login",
+          this.loginForm
+        );
+        if (res.status !== 200) {
+          return this.$message.error(res.msg);
+        }
+        // console.log(res);
+        this.$message.success("登录成功");
+        window.sessionStorage.setItem("token", res.map.token);
+        window.sessionStorage.setItem("userId", res.map.id);
+        this.$router.push("/home"); //跳转到home页面下
       });
     },
     goUser() {
@@ -144,6 +147,15 @@ export default {
 </script>
     
     <style lang="less" scoped>
+.footer2 {
+  position: absolute;
+  bottom: 0px;
+  left: 45%;
+  color: #ccc;
+  a {
+    color: #ccc;
+  }
+}
 .login_container {
   // background-color: #2b4b6b;
   background: url(https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/digitalCityMin.png)

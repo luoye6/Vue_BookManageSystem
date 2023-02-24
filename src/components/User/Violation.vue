@@ -10,7 +10,7 @@
       <el-row>
         <el-col :span="6"
           >条件搜索:<el-select
-            v-model="value"
+            v-model="queryInfo.condition"
             filterable
             placeholder="请选择"
             style="margin-left: 15px"
@@ -27,38 +27,63 @@
         <el-col :span="4">
           <el-input
             placeholder="请输入内容"
-            v-model="input"
+            v-model="queryInfo.query"
             class="input-with-select"
+            @keyup.enter.native="searchViolationByPage"
           >
             <el-button
               slot="append"
               icon="el-icon-search"
+              @click="searchViolationByPage"
             ></el-button> </el-input
         ></el-col>
-        <el-col :span="4" style="float: right"> 导出Excel、PDF </el-col>
+        <el-col :span="2" style="float: right">
+          <download-excel
+            class="export-excel-wrapper"
+            :data="tableData"
+            :fields="json_fields"
+            :header="title"
+            name="图书违章表格.xls"
+          >
+            <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
+            <el-button type="primary" class="el-icon-printer" size="mini"
+              >导出Excel</el-button
+            >
+          </download-excel>
+        </el-col>
+        <el-col :span="2" style="float: right">
+          <el-button
+            type="primary"
+            class="el-icon-printer"
+            size="mini"
+            @click="downLoad"
+            >导出PDF</el-button
+          >
+        </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe>
-        <el-table-column prop="cardNumber" label="借阅证号">
+      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'cardNumber', order: 'ascending'}">
+        <el-table-column prop="cardNumber" label="借阅证号" sortable> </el-table-column>
+        <el-table-column prop="bookNumber" label="图书编号" sortable> </el-table-column>
+        <el-table-column prop="borrowDate" label="借阅日期" sortable> </el-table-column>
+        <el-table-column prop="closeDate" label="截止日期" sortable> </el-table-column>
+        <el-table-column prop="returnDate" label="归还日期" sortable> </el-table-column>
+        <el-table-column prop="violationMessage" label="违章信息">
         </el-table-column>
-        <el-table-column prop="bookNumber" label="图书编号">
+        <el-table-column prop="violationAdmin" label="处理人">
         </el-table-column>
-        <el-table-column prop="borrowDate" label="借阅日期"> </el-table-column>
-        <el-table-column prop="closeDate" label="截止日期"> </el-table-column>
-        <el-table-column prop="returnDate" label="归还时间"> </el-table-column>
-        <el-table-column prop="violationMessage" label="违章信息"> </el-table-column>
-        <el-table-column prop="violationAdmin" label="处理人"> </el-table-column>
       </el-table>
       <!-- 分页查询区域 -->
       <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[1, 2, 3, 4]"
-      :page-size="100"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="this.tableData.length">
-    </el-pagination>
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="this.queryInfo.pageNum"
+        :page-sizes="[1, 2, 3, 4, 5]"
+        :page-size="this.queryInfo.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.total"
+      >
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -69,80 +94,92 @@ export default {
     return {
       options: [
         {
-          value: "选项1",
+          value: "book_number",
           label: "图书编号",
         },
         {
-          value: "选项2",
+          value: "borrow_date",
           label: "借阅日期",
         },
         {
-          value: "选项3",
+          value: "close_date",
           label: "截止日期",
         },
         {
-          value: "选项4",
+          value: "return_date",
           label: "归还日期",
         },
         {
-          value: "选项5",
+          value: "violation_message",
           label: "违章信息",
         },
+      ],
+      tableData: [
         {
-          value: "选项6",
-          label: "处理人",
+          cardNumber: Number,
+          bookNumber: Number,
+          borrowDate: "",
+          closeDate: "",
+          returnDate: "",
+          violationMessage: "",
+          violationAdmin: "",
         },
       ],
-      value: "",
-      tableData: [{
-        cardNumber: '1805190219',
-        bookNumber: '12378',
-        borrowDate: '2022-11-11 12:00:00',
-        closeDate:'2023-02-03 12:00:00',
-        returnDate:'2023-01-15 11:44:34',
-        violationMessage:'书籍损坏',
-        violationAdmin:'admin',
-        }, {
-        cardNumber: '1805190219',
-        bookNumber: '12378',
-        borrowDate: '2022-11-11 12:00:00',
-        closeDate:'2023-02-03 12:00:00',
-        returnDate:'2023-01-15 11:44:34',
-        violationMessage:'书籍损坏',
-        violationAdmin:'admin',
-        }, {
-        cardNumber: '1805190219',
-        bookNumber: '12378',
-        borrowDate: '2022-11-11 12:00:00',
-        closeDate:'2023-02-03 12:00:00',
-        returnDate:'2023-01-15 11:44:34',
-        violationMessage:'书籍损坏',
-        violationAdmin:'admin',
-        }, {
-        cardNumber: '1805190219',
-        bookNumber: '12378',
-        borrowDate: '2022-11-11 12:00:00',
-        closeDate:'2023-02-03 12:00:00',
-        returnDate:'2023-01-15 11:44:34',
-        violationMessage:'书籍损坏',
-        violationAdmin:'admin',
-        }, ],
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4,
-        input:'',
-
+      queryInfo: {
+        pageNum: 1,
+        pageSize: 5,
+        condition: "",
+        query: "",
+        cardNumber: window.sessionStorage.getItem("cardNumber"),
+      },
+      total: 0,
+      title: "图书违章表格",
+      json_fields: {
+        借阅证号: "cardNumber",
+        图书编号: "bookNumber",
+        借阅日期: "borrowDate",
+        截止日期: "closeDate",
+        归还日期: "returnDate",
+        违章信息:"violationMessage",
+        处理人:"violationAdmin"
+      },
     };
   },
   methods: {
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
+    handleSizeChange(val) {
+      this.queryInfo.pageSize = val;
+      this.searchViolationByPage();
     },
+    handleCurrentChange(val) {
+      this.queryInfo.pageNum = val;
+      this.searchViolationByPage();
+    },
+    async searchViolationByPage() {
+      const { data: res } = await this.$http.post(
+        "user/get_violation",
+        this.queryInfo
+      );
+
+      this.tableData = [];
+      // console.log(res);
+      if (res.status !== 200) {
+        this.total = 0;
+        return this.$message.error(res.msg);
+      }
+      this.$message.success({
+        message: res.msg,
+        duration: 1000,
+      });
+      this.tableData = res.data.records;
+      this.total = res.data.total;
+    },
+    downLoad() {
+      this.getPdf(this.title); //参数是下载的pdf文件名
+    },
+  },
+  created() {
+    this.searchViolationByPage();
+  },
 };
 </script>
 

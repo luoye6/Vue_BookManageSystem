@@ -12,6 +12,20 @@ import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
 // 引入swiper的样式
 // import 'swiper/css/swiper.css'
+//单独引入Message axios拦截器需要
+import {Message} from 'element-ui'
+// 引入表格导出excel插件
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
+// 导入pdf插件
+import htmlToPdf from './components/Utils/htmlToPdf.js'
+Vue.use(htmlToPdf)
+// 引入echarts
+import * as echarts from 'echarts'
+// 引入Chrome PassiveEventListeners优化页面性能
+import 'default-passive-events'
+// 设置全局变量
+Vue.prototype.$echarts = echarts
 
 //注册粒子插件
 Vue.use(VueParticles)
@@ -22,8 +36,11 @@ Vue.use(vueBaberrage)
 //导入axios
 import axios from 'axios'
 //配置请求的根路径
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://cba.xiaobaitiao.club:443/api/'
 Vue.prototype.$http = axios
+// const CancelToken = axios.CancelToken;
+// const source = CancelToken.source();
+// export {source}
 //导入NProgress包对应的js和CSS
 import  NProgress  from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -32,13 +49,21 @@ axios.interceptors.request.use(config => {
   NProgress.start()
   // console.log(config);
   // 为请求头对象，添加Token验证的Authorization字段
-  config.headers.Authorization = window.sessionStorage.getItem('token');
+  config.headers.Authorization = "Bearer "+window.sessionStorage.getItem('token');
   return config;
 })
 //在response拦截器中，隐藏进度条NProgress.done()
-axios.interceptors.response.use(config => {
+axios.interceptors.response.use(response => {
   NProgress.done()
-  return config
+  // 登录校验 响应状态码为401时拦截
+  if(response.data.status === 401){
+    Message.error("未登录或登录过期，请重新登录");
+    // 清除过期的token和原来保存的用户id
+    window.sessionStorage.clear();
+    // 跳转到登录页面
+    router.replace('/login')
+  }
+  return response
 })
 Vue.config.productionTip = false
 

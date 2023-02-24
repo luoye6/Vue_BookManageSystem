@@ -12,10 +12,10 @@
           <el-avatar
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
             :size="35"
-            style="margin-right:10px;"
+            style="margin-right: 10px"
           ></el-avatar>
         </div>
-        <div class="user">用户:相思断红肠</div>
+        <div class="user">用户:{{this.user.cardName }}</div>
         <el-button type="info" @click="logout">退出</el-button>
       </div>
     </el-header>
@@ -76,6 +76,13 @@
       <el-main>
         <!-- 路由占位符 -->
         <router-view></router-view>
+        <div class="footer">
+          <p>
+            ©2022-2022 By 小白条<br /><a href="https://beian.miit.gov.cn"
+              >备案号:浙ICP备2022034182号</a
+            >
+          </p>
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -98,25 +105,40 @@ export default {
       isCollapse: false,
       //被激活的链接地址
       activePath: "",
+      user: {
+        userId: Number,
+        cardNumber:Number,
+        ruleNumber:Number,
+        status:Number,
+        cardName:"",
+        username:"",
+        password:"",
+        createTime:"",
+        updateTime:"",
+      },
     };
   },
-  created() {
+  async created() {
     // this.getMenuList();
     this.activePath = window.sessionStorage.getItem("activePath");
     // console.log(this.activePath)
+    // 先获取sessionStorage中的id
+    const stringId = window.sessionStorage.getItem("userId");
+    const id = parseInt(stringId);
+    this.user.userId = id;
+    const { data: res } = await this.$http.post("user/getData", this.user);
+    // console.log(res);
+    window.sessionStorage.setItem('cardNumber',res.data.cardNumber)
+    this.user = res.data;
   },
+  async mounted() {},
   methods: {
     logout() {
       window.sessionStorage.clear();
       this.$router.push("/login");
     },
-    //获取所有的菜单
-    async getMenuList() {
-      const { data: res } = await this.$http.get("menus");
-      if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
-      this.menulist = res.data;
-      console.log(res);
-    },
+  
+  
     //点击按钮，切换菜单的折叠与展开
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
@@ -133,6 +155,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  color:#ccc;
+  a {
+    color:#ccc;
+  }
+}
 .home-container {
   height: 100%;
 }

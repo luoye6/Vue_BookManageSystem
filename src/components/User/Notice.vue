@@ -9,11 +9,11 @@
     <div class="banner">
       <div class="banner_header"><p>近期公告</p></div>
       <div class="banner_main">
-        <div class="banner_main_item" v-for="(item,index) in bannerList" :key="index">
-          <div class="banner_main_item_header">    <p> {{ item.header }}</p></div>
+        <div class="banner_main_item" v-for="item in noticeList" :key="item.noticeId">
+          <div class="banner_main_item_header">    <p> {{ item.noticeTitle }}     {{ item.createTime }}</p></div>
        
           <div class="banner_main_item_main">
-                <p>{{ item.main }}</p>
+                <p>{{ item.noticeContent }}</p>
           </div>
         </div>
       </div>
@@ -22,19 +22,36 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      text: "图书馆公告栏,记得查收公告呀!",
-      bannerList:[
-        {header:"本应用源代码地址,欢迎star 2022-12-20 00:00:00",main:"发现bug请提出issue,请勿恶意攻击,谢谢"},
-        {header:"本应用源代码地址,欢迎star 2022-12-20 00:00:00",main:"发现bug请提出issue,请勿恶意攻击,谢谢"},
-        {header:"本应用源代码地址,欢迎star 2022-12-20 00:00:00",main:"发现bug请提出issue,请勿恶意攻击,谢谢"},
-        {header:"本应用源代码地址,欢迎star 2022-12-20 00:00:00",main:"发现bug请提出issue,请勿恶意攻击,谢谢"},
+      text: "图书馆公告栏,记得查收公告呀!小项目请勿恶意攻击,谢谢",
+      noticeList:[
+        {
+          noticeId:0,
+          noticeAdminId:Number,
+          noticeTitle:"",
+          noticeContent:"",
+          createTime:"",
+          updateTime:""
+        }
       ]
     };
   },
-  methods: {},
+  methods: {
+    async getRuleList(){
+      const {data:res} = await this.$http.get('user/get_noticelist')
+      if(res.status!== 200){
+        return this.$message.error(res.msg)
+      }
+      this.$message.success({
+        message:res.msg,
+        duration:1000
+      })
+      this.noticeList = res.data;
+    }
+  },
   mounted() {
     const containerWidth = this.$refs.scrollText.offsetWidth;
     const textWidth = this.$refs.scrollText.scrollWidth;
@@ -44,6 +61,9 @@ export default {
       this.$refs.scrollText.style.animation = "scroll 10s linear infinite";
     }
   },
+  created(){
+    this.getRuleList();
+  }
 };
 </script>
 

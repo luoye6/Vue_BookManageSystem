@@ -5,14 +5,14 @@
     </div>
     <div class="banner">
       <el-tooltip
-      v-for="(item,index) in ruleList"
-      :key="index"
-
+      v-for="item in ruleList"
+      :key="item.ruleId"
         effect="dark"
-        :content="item.content"
         placement="right"
       >
-        <el-button>借阅证规则编号: 18</el-button>
+      <div slot="content" class="content_tip">可借阅数量: {{ item.bookLimitNumber }}<br/>可借阅天数: {{ item.bookDays }}
+      <br/>可借阅图书馆: {{ item.bookLimitLibrary }}<br/>过期扣费/天: {{ item.bookOverdueFee }}</div>
+        <el-button style="font-size:16px">借阅证规则编号: {{ item.bookRuleId }}</el-button>
       </el-tooltip>
      
     </div>
@@ -24,14 +24,36 @@ export default {
   data(){
     return {
       ruleList:[
-        {content:"1"},
-        {content:"2"},
-        {content:"3"},
-        {content:"4"},
-        {content:"5"},
+        {
+          ruleId:0,
+          bookRuleId:Number,
+          bookDays:Number,
+          bookLimitNumber:Number,
+          bookOverdueFee:Number,
+          bookLimitLibrary:"",
+          createTime:"",
+          updateTime:"",
+          
+        }
 
       ]
     }
+  },
+  methods:{
+   async  getRuleList(){
+      const {data:res} = await this.$http.get("user/get_rulelist")
+      if(res.status !== 200){
+        return this.$message.error(res.msg);
+      }
+      this.$message.success({
+        message:res.msg,
+        duration:1000
+      })
+      this.ruleList = res.data
+    }
+  },
+  created(){
+      this.getRuleList()
   }
 };
 </script>
@@ -78,5 +100,7 @@ export default {
 .el-tooltip:nth-child(even){
   background-color: rgb(49, 176, 213)
 }
-
+.content_tip {
+  font-size: 16px;
+}
 </style>
