@@ -304,3 +304,55 @@
 ![image-20230224202410649](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202410649.png)
 
 ## 🐼部署项目
+
+![image-20230224205310278](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224205310278.png)
+
++ 可以下载ZIP压缩包或者使用克隆(Git clone)
++ 复制http或者ssh的链接（github建议ssh,gittee都可以)
++ 在D盘新建一个文件夹，点击进入该文件夹，右键Git Bash Here
+
+![img](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/da5376c09ecd46c9a2e410a39ae652f7.png)
+
++ 还没有下载Git或者不会Git的建议先看基础教程（30分钟左右)
+
++ 输入git init 初始化git项目 然后出现一个.git文件夹
++ 输入git remote add origin xxxxxx(xxx为刚刚复制的http或者ssh链接)
+
++ 输入git pull origin master 从远程代码托管仓库拉取代码
++ 成功拉取项目（前端后端都是如此)
++ 前端项目注意依赖下载使用npm install 或者 yarn install （Vscode或者Webstorm)
++ 后端项目注意maven依赖下载（IDEA(推荐)或者Ecplise)
++ 前端npm 镜像源建议淘宝镜像源，后端maven镜像源推荐阿里云镜像源（非必选，但更换后下载快速) 
+
+## 🐼部署项目问题
+
+⭐
+
++ 乱码问题 项目采用的UFT-8 
++ 一般出现乱码就是UTF-8和GBK二者相反
++ 请百度IDEA乱码和Eclipse乱码问题(描述清楚即可)
+
+⭐
+
++ 点击交互按钮，没有发生反应。
++ 很明显，请求失败，浏览器打开开发者工具，Edge浏览器直接ctrl+shift+i,其他浏览器按F12
++ 查看红色的请求和响应状态码问题
+
+⭐
+
++ 先阅读文档再进行问题的查询或者提问
++ 提问有技巧，模糊的发言，让高级架构师找BUG也无从下手
+
+⭐
+
++ **QQ：909088445**
+
++ 晚上在线，建议先自己寻找问题，实在实现不了，可以滴我
++ 需要定制化项目和修改项目的某些的功能也可以加我
+
+## 🐼项目API接口文档
+
++ 接口文档篇幅过大请加我QQ后私发
++ 本来想完全采用RESTFUL风格，做到一半忘记了
++ 看清楚文档的基准地址
+
