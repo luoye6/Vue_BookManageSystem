@@ -3,7 +3,9 @@
 + 本项目拥有完整的API后台接口文档（文尾)
 + 项目部署视频正在录制
 + 如果项目对您有所帮助，可以Star⭐一下，受到鼓励的我会继续加油。
-+ 项目在线演示地址: https://abc.xiaobaitiao.club/
++ [项目在线演示地址](https://abc.xiaobaitiao.club/)
++ [项目前端地址](https://gitee.com/falle22222n-leaves/vue_-book-manage-system)
++ [项目后端地址](https://gitee.com/falle22222n-leaves/vue_-book-manage-system_backend)
 
 ## ☀️技术栈介绍
 
@@ -356,3 +358,9 @@
 + 本来想完全采用RESTFUL风格，做到一半忘记了
 + 看清楚文档的基准地址
 
+## 🐷其他
+
++ 个人博客地址: https://luoye6.github.io/
++ 个人博客采用Hexo+Github托管
++ 采用butterfly主题可以实现定制化
++ 推荐有空闲时间的，可以花1-2天搭建个人博客用于记录笔记。
