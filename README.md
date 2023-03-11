@@ -62,7 +62,7 @@
 
 + 遇到交互功能错误，或者页面无法打开，请用开发者工具F12查看请求和响应状态码情况，当然可能小白不懂，那也没关系，可以加我**QQ：909088445**。白天上课，晚上有空才能回答，感谢体谅！⭐⭐⭐
 
-## ☀️项目详细介绍
+## ☀️项目详细介绍（亮点)
 
 + 本项目采用前后端分离的模式，前端构建页面，后端作数据接口，前端调用后端数据接口得到数据，重新渲染页面。
 + 后端已开启CORS跨域支持
@@ -70,10 +70,14 @@
 + 前端在Authorization字段提供token令牌
 + 使用HTTP Status Code表示状态
 + 数据返回格式使用JSON
++ 后端采用权限拦截器进行权限校验，并检查登录情况
++ 添加全局异常处理机制，捕获异常，增强系统健壮性
++ 前端用Echarts展示借阅量，文字和图片结合
++ 留言组件采用弹幕形式，贴合用户的喜好。
 
 ### ⭐用户模块功能介绍
 
-![image-20230224172345782](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224172345782.png)
+![img](http://xxx.xiaobaitiao.club/project/%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D.png)
 
 + 图书查询功能：分页构造器缓解数据过大压力，后端可设置请求数防止爬虫请求数过大，服务器负载过大。模糊查询进行字段搜索。表格均可导出PDF和EXCEL。
 + 读者规则功能：查询现有的借阅规则，借阅规则包括：借阅编号，可借阅图书数量，可借阅天数，可借阅图书馆，过期扣费/天。
@@ -87,7 +91,7 @@
 
 ### ⭐图书管理员模块功能介绍
 
-![image-20230224195415538](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224195415538.png)
+![image-20230311151434774](http://xxx.xiaobaitiao.club/project/%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E5%91%98%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%9B%BE.png)
 
 + 借阅图书: 图书管理员输入借阅证号(用户)和要借的图书编号和当前的时间，点击借阅。
 + 归还图书: 输入图书编号查看图书是否逾期，并且可以设置违规信息，然后选择是否归还图书
@@ -98,7 +102,7 @@
 
 ### ⭐系统管理员模块功能介绍
 
-![image-20230224195930279](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224195930279.png)
+![image-20230311151453931](http://xxx.xiaobaitiao.club/project/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%91%98%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D%E5%9B%BE.png)
 
 + 书籍管理: 可以查询当前的所有图书，显示图书编号，图书昵称，作者，图书馆，分类，位置，状态，描述。可以进行添加，修改，删除图书。利用分页构造器实现批量查询。利用模糊查询实现图书搜索功能。利用插件实现PDF和EXCEL导出。
 + 书籍类型: 显示查询当前的所有图书类型，可以进行添加，修改，删除图书类型，利用分页构造器实现批量查询，缓解数据压力。
@@ -245,57 +249,57 @@
 
 **首页轮播图演示**
 
-![image-20230224201715408](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201715408.png)
+![image-20230311151755217](http://xxx.xiaobaitiao.club/project/%E9%A6%96%E9%A1%B5%E8%BD%AE%E6%92%AD%E5%9B%BE%E6%BC%94%E7%A4%BA.png)
 
 **图书查询演示**
 
-![image-20230224201735395](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201735395.png)
+![image-20230311151815350](http://xxx.xiaobaitiao.club/project/%E5%9B%BE%E4%B9%A6%E6%9F%A5%E8%AF%A2%E6%BC%94%E7%A4%BA.png)
 
 **读者规则演示**
 
-![image-20230224201754470](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201754470.png)
+![image-20230311151837692](http://xxx.xiaobaitiao.club/project/%E8%AF%BB%E8%80%85%E8%A7%84%E5%88%99%E6%BC%94%E7%A4%BA.png)
 
 **查看公告演示**
 
-![image-20230224201826551](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201826551.png)
+![image-20230311151858285](http://xxx.xiaobaitiao.club/project/%E6%9F%A5%E7%9C%8B%E5%85%AC%E5%91%8A%E6%BC%94%E7%A4%BA.png)
 
 **个人信息演示**
 
-![image-20230224201847579](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201847579.png)
+![image-20230311151918353](http://xxx.xiaobaitiao.club/project/%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E6%BC%94%E7%A4%BA.png)
 
 **借阅信息演示**
 
-![image-20230224201920560](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201920560.png)
+![image-20230311151939885](http://xxx.xiaobaitiao.club/project/%E5%80%9F%E9%98%85%E4%BF%A1%E6%81%AF%E6%BC%94%E7%A4%BA.png)
 
 **违章信息演示**
 
-![image-20230224201938634](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201938634.png)
+![image-20230311151958147](http://xxx.xiaobaitiao.club/project/%E8%BF%9D%E7%AB%A0%E4%BF%A1%E6%81%AF%E6%BC%94%E7%A4%BA.png)
 
 **读者留言演示**
 
-![image-20230224202007128](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202007128.png)
+![image-20230311152043122](http://xxx.xiaobaitiao.club/project/%E8%AF%BB%E8%80%85%E7%95%99%E8%A8%80%E6%BC%94%E7%A4%BA.png)
 
 ### 图书管理员功能图
 
 **借阅图书演示**
 
-![image-20230224202136525](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202136525.png)
+![image-20230311152118721](http://xxx.xiaobaitiao.club/project/%E5%80%9F%E9%98%85%E5%9B%BE%E4%B9%A6%E6%BC%94%E7%A4%BA.png)
 
 **归还图书演示**
 
-![image-20230224202201946](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202201946.png)
+![image-20230311152136821](http://xxx.xiaobaitiao.club/project/%E5%BD%92%E8%BF%98%E5%9B%BE%E4%B9%A6%E6%BC%94%E7%A4%BA.png)
 
 **借书报表演示**
 
-![image-20230224202220799](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202220799.png)
+![image-20230311152220983](http://xxx.xiaobaitiao.club/project/%E5%80%9F%E4%B9%A6%E6%8A%A5%E8%A1%A8.png)
 
 **还书报表演示**
 
-![image-20230224202242175](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202242175.png)
+![image-20230311152251587](http://xxx.xiaobaitiao.club/project/%E8%BF%98%E4%B9%A6%E6%8A%A5%E8%A1%A8.png)
 
 **发布公告演示**
 
-![image-20230224202300880](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202300880.png)
+![image-20230311152310736](http://xxx.xiaobaitiao.club/project/%E5%8F%91%E5%B8%83%E5%85%AC%E5%91%8A%E6%BC%94%E7%A4%BA.png)
 
 ### 系统管理员功能图
 
@@ -303,17 +307,17 @@
 
 **系统管理演示**
 
-![image-20230224202410649](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202410649.png)
+![image-20230311152338284](http://xxx.xiaobaitiao.club/project/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86.png)
 
 ## 🐼部署项目
 
-![image-20230224205310278](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224205310278.png)
+![image-20230311152411864](http://xxx.xiaobaitiao.club/project/%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA1.png)
 
 + 可以下载ZIP压缩包或者使用克隆(Git clone)
 + 复制http或者ssh的链接（github建议ssh,gittee都可以)
 + 在D盘新建一个文件夹，点击进入该文件夹，右键Git Bash Here
 
-![img](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/da5376c09ecd46c9a2e410a39ae652f7.png)
+![image-20230311152442211](http://xxx.xiaobaitiao.club/project/%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA2.png)
 
 + 还没有下载Git或者不会Git的建议先看基础教程（30分钟左右)
 
@@ -363,7 +367,4 @@
 + 个人博客地址: https://luoye6.github.io/
 + 个人博客采用Hexo+Github托管
 + 采用butterfly主题可以实现定制化
-
 + 推荐有空闲时间的，可以花1-2天搭建个人博客用于记录笔记。
-
-
