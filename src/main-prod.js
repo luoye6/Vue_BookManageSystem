@@ -36,7 +36,7 @@ Vue.use(vueBaberrage)
 //导入axios
 import axios from 'axios'
 //配置请求的根路径
-axios.defaults.baseURL = 'xxxxxxxx服务器地址xxxxx'
+axios.defaults.baseURL = 'http://cba.xiaobaitiao.club:443/api/'
 Vue.prototype.$http = axios
 // const CancelToken = axios.CancelToken;
 // const source = CancelToken.source();

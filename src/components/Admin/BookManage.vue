@@ -42,6 +42,7 @@
             <i class="el-icon-plus"></i> 添加书籍</el-button
           >
         </el-col>
+
         <el-col :span="2" style="float: right">
           <download-excel
             class="export-excel-wrapper"
@@ -65,19 +66,45 @@
             >导出PDF</el-button
           >
         </el-col>
+        <el-col :span="2" style="float: right">
+          <el-button type="warning" @click="removeBatch()" size="mini">
+            <i class="el-icon-delete"></i>批量删除</el-button
+          >
+        </el-col>
       </el-row>
 
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'bookNumber', order: 'ascending'}">
+      <el-table
+        :data="tableData"
+        border
+        height="520"
+        style="width: 100%"
+        stripe
+        id="pdfDom"
+        :default-sort="{ prop: 'bookNumber', order: 'ascending' }"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column type="index"></el-table-column>
-        <el-table-column prop="bookNumber" label="图书编号" sortable> </el-table-column>
-        <el-table-column prop="bookName" label="书名"> </el-table-column>
-        <el-table-column prop="bookAuthor" label="作者"> </el-table-column>
-        <el-table-column prop="bookLibrary" label="图书馆"> </el-table-column>
-        <el-table-column prop="bookType" label="分类"> </el-table-column>
-        <el-table-column prop="bookLocation" label="位置" sortable> </el-table-column>
-        <el-table-column prop="bookStatus" label="状态" sortable> </el-table-column>
-        <el-table-column prop="bookDescription" label="描述" width="300px">
+        <el-table-column prop="bookNumber" label="图书编号" sortable>
+        </el-table-column>
+        <el-table-column prop="bookName" label="书名" width="80px">
+        </el-table-column>
+        <el-table-column prop="bookAuthor" label="作者" width="80px">
+        </el-table-column>
+        <el-table-column prop="bookLibrary" label="图书馆" width="80px">
+        </el-table-column>
+        <el-table-column prop="bookType" label="分类" width="80px">
+        </el-table-column>
+        <el-table-column prop="bookLocation" label="位置" sortable width="80px">
+        </el-table-column>
+        <el-table-column prop="bookStatus" label="状态" sortable width="80px">
+        </el-table-column>
+        <el-table-column prop="bookDescription" label="描述" width="400px">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -360,6 +387,8 @@ export default {
         状态: "bookStatus",
         描述: "bookDescription",
       },
+      loading: true,
+      multipleSelection: [],
     };
   },
   methods: {
@@ -370,6 +399,9 @@ export default {
     handleCurrentChange(val) {
       this.queryInfo.pageNum = val;
       this.getBookList();
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     },
     //让修改图书的对话框可见,并从数据库中回显数据
     async showEditDialog(id) {
@@ -388,7 +420,7 @@ export default {
     editDialogClosed() {
       this.$refs.editFormRef.resetFields();
     },
-    //删除图书
+    //删除单个图书
     async removeUserById(id) {
       //弹框，询问用户是否删除数据
       const confirmResult = await this.$confirm(
@@ -436,6 +468,7 @@ export default {
       this.addDialogVisible = true;
     },
     async getBookList() {
+      this.loading = true;
       const { data: res } = await this.$http.post(
         "admin/get_booklist",
         this.queryInfo
@@ -444,6 +477,7 @@ export default {
       // console.log(res);
       if (res.status !== 200) {
         this.total = 0;
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -452,6 +486,7 @@ export default {
       });
       this.tableData = res.data.records;
       this.total = res.data.total;
+      this.loading = false;
     },
     async addBook() {
       const { data: res } = await this.$http.post(
@@ -490,6 +525,54 @@ export default {
     downLoad() {
       this.getPdf(this.title); //参数是下载的pdf文件名
     },
+    // 批量删除图书
+    async removeBatch(){
+       //弹框，询问用户是否删除数据
+       const confirmResult = await this.$confirm(
+        "此操作将永久删除这些书籍, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((error) => {
+        return error;
+      });
+      //如果用户确认删除，则返回值为字符串confirm
+      //如果用户取消删除，则返回值为字符串cancel
+      // console.log(confirmResult);
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已经取消删除");
+      }
+      // 判断multipleSelection数组是否为空，为空的话进行提示
+      if(this.multipleSelection.length == 0){
+        return this.$message.error({
+          message:"选中项为空，无法进行批量删除",
+          duration:1000
+        });
+      }
+      //如果用户确认删除，那么下一步就是发送axios请求，检查响应状态码是否成功,成功则返回删除成功，否则返回删除失败
+      // const { data: res } = await this.$http.get("admin/delete_book/" + id);
+      const {data: res} = await this.$http.delete("admin/delete_book_batch",{
+        data:this.multipleSelection
+      });
+      // console.log(res);
+      if (res.status !== 200) {
+        return this.$message.error({
+          message:res.msg,
+          duration:1000
+        });
+      }
+      this.$message.success({
+        message:res.msg,
+        duration:1000
+      });
+      // 防止删除出现数据显示错误
+      this.queryInfo.pageNum = 1;
+      this.queryInfo.pageSize = 5;
+      this.getBookList();
+    }
   },
   created() {
     this.getBookList();

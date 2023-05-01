@@ -8,7 +8,11 @@
     </div>
     <div class="banner">
       <div class="banner_header"><p>近期公告</p></div>
-      <div class="banner_main">
+      <div class="banner_main"
+      v-loading="loading"
+        element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="banner_main_item" v-for="item in noticeList" :key="item.noticeId">
           <div class="banner_main_item_header">    <p> {{ item.noticeTitle }}     {{ item.createTime }}</p></div>
        
@@ -36,13 +40,16 @@ export default {
           createTime:"",
           updateTime:""
         }
-      ]
+      ],
+      loading:true
     };
   },
   methods: {
     async getRuleList(){
+      this.loading = true;
       const {data:res} = await this.$http.get('user/get_noticelist')
       if(res.status!== 200){
+        this.loading = false;
         return this.$message.error(res.msg)
       }
       this.$message.success({
@@ -50,6 +57,7 @@ export default {
         duration:1000
       })
       this.noticeList = res.data;
+      this.loading = false;
     }
   },
   mounted() {

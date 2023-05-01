@@ -6,13 +6,30 @@
     <div class="swiper-wrapper">
       <!-- 每个节点 -->
       <div class="swiper-slide">
-        <img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/banner8.png" alt="图片1" />
+        <img
+        data-src="https://xxx.xiaobaitiao.club/img/book1.jpg"
+          src="https://xxx.xiaobaitiao.club/img/loading.gif"
+          alt="书籍1"
+          class="swiper-lazy"
+        />
       </div>
       <div class="swiper-slide">
-        <img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/banner9.png" alt="图片2" />
+        <img
+          data-src="https://xxx.xiaobaitiao.club/img/book2.jpg"
+          src="https://xxx.xiaobaitiao.club/img/loading.gif"
+          alt="书籍2"
+          class="swiper-lazy"
+        />
+        <div class="swiper-lazy-preloader"></div>
       </div>
       <div class="swiper-slide">
-        <img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/banner7.png" alt="图片3" />
+        <img
+          data-src="https://xxx.xiaobaitiao.club/img/book3.jpg"
+          src="https://xxx.xiaobaitiao.club/img/loading.gif"
+          alt="书籍3"
+          class="swiper-lazy"
+        />
+        <div class="swiper-lazy-preloader"></div>
       </div>
     </div>
 
@@ -29,6 +46,7 @@
 
 <script>
 import swiper from "swiper";
+
 export default {
   name: "",
   data() {
@@ -58,6 +76,10 @@ export default {
 
         // 用户中断轮播后续播
         autoplayDisableOnInteraction: false,
+        //懒加载
+        lazyLoading: true,
+        
+
       });
     },
   },

@@ -127,7 +127,7 @@ export default {
     const id = parseInt(stringId);
     this.user.userId = id;
     const { data: res } = await this.$http.post("user/getData", this.user);
-    // console.log(res);
+    console.log(res);
     window.sessionStorage.setItem('cardNumber',res.data.cardNumber)
     this.user = res.data;
   },
@@ -157,7 +157,7 @@ export default {
 <style lang="less" scoped>
 
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   left: 50%;
   color:#ccc;

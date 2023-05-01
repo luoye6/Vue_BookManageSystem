@@ -62,8 +62,13 @@
       <!-- 表格区域 -->
       <el-table
         :data="tableData"
+        height="520"
         border
         style="width: 100%; font-size: 14px"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
         id="pdfDom"
         :default-sort = "{prop: 'bookNumber', order: 'ascending'}"
         stripe
@@ -120,46 +125,7 @@ export default {
         },
       ],
       tableData: [
-        {
-          bookNumber: "162",
-          bookName: "四大名著",
-          bookAuthor: "群英",
-          bookLibrary: "教师之家",
-          bookType: "",
-          bookLocation: "3333",
-          bookStatus: "未借出",
-          bookDescription: "日本知名文化记者石桥毅史走遍日本全国特色书店。",
-        },
-        {
-          bookNumber: "162",
-          bookName: "四大名著",
-          bookAuthor: "群英",
-          bookLibrary: "教师之家",
-          bookType: "",
-          bookLocation: "3333",
-          bookStatus: "未借出",
-          bookDescription: "日本知名文化记者石桥毅史走遍日本全国特色书店。",
-        },
-        {
-          bookNumber: "162",
-          bookName: "四大名著",
-          bookAuthor: "群英",
-          bookLibrary: "教师之家",
-          bookType: "",
-          bookLocation: "3333",
-          bookStatus: "未借出",
-          bookDescription: "日本知名文化记者石桥毅史走遍日本全国特色书店。",
-        },
-        {
-          bookNumber: "162",
-          bookName: "四大名著",
-          bookAuthor: "群英",
-          bookLibrary: "教师之家",
-          bookType: "",
-          bookLocation: "3333",
-          bookStatus: "未借出",
-          bookDescription: "日本知名文化记者石桥毅史走遍日本全国特色书店。",
-        },
+      
       ],
       queryInfo: {
         pageNum: 1,
@@ -180,7 +146,7 @@ export default {
         状态: "bookStatus",
         描述: "bookDescription",
       },
-     
+      loading: true
     };
   },
   created() {
@@ -189,13 +155,16 @@ export default {
   methods: {
     handleSizeChange(val) {
       this.queryInfo.pageSize = val;
+ 
       this.searchBookByPage();
     },
     handleCurrentChange(val) {
       this.queryInfo.pageNum = val;
+    
       this.searchBookByPage();
     },
     async searchBookByPage() {
+      this.loading = true;
       const { data: res } = await this.$http.post(
         "user/search_book_page",
         this.queryInfo
@@ -203,12 +172,14 @@ export default {
       this.tableData = [];
       if (res.status !== 200) {
         this.total = 0;
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
         message: res.msg,
         duration: 1000,
       });
+      this.loading = false;
       this.tableData = res.data.records;
       this.total = res.data.total;
     },

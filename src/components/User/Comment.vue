@@ -2,7 +2,7 @@
   <div class="comment_container">
     <div class="backgroundImg">
       <img
-        src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/animeboySkyMin.png"
+        src="http://xxx.xiaobaitiao.club/img/animeboySkyMin.png"
         alt=""
       />
     </div>

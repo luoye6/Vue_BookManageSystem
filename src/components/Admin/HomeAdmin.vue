@@ -158,7 +158,7 @@ export default {
   
   <style lang="less" scoped>
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   left: 50%;
   color:#ccc;

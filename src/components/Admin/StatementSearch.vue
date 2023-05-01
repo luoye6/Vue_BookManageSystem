@@ -62,7 +62,11 @@
         </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'violationId', order: 'ascending'}">
+      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'violationId', order: 'ascending'}"
+      v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-table-column prop="violationId" label="ID" sortable>
         </el-table-column>
         <el-table-column prop="cardNumber" label="借阅证号" sortable>
@@ -118,43 +122,7 @@ export default {
           label: "违章信息",
         },
       ],
-      tableData: [{
-        violationId:621,
-        cardNumber: '1805010219',
-        bookNumber: '12378',
-        borrowDate: '2022-12-20 16:48:44',
-        closeDate:'2023-02-08 16:49:37',
-        returnDate:'2022-12-23 13:10:45',
-        violationMessage:'',
-        violationAdmin:'root',
-        }, {
-          violationId:621,
-        cardNumber: '1805010219',
-        bookNumber: '12378',
-        borrowDate: '2022-12-20 16:48:44',
-        closeDate:'2023-02-08 16:49:37',
-        returnDate:'2022-12-23 13:10:45',
-        violationMessage:'',
-        violationAdmin:'root',
-        }, {
-          violationId:621,
-        cardNumber: '1805010219',
-        bookNumber: '12378',
-        borrowDate: '2022-12-20 16:48:44',
-        closeDate:'2023-02-08 16:49:37',
-        returnDate:'2022-12-23 13:10:45',
-        violationMessage:'',
-        violationAdmin:'root',
-        }, {
-          violationId:621,
-        cardNumber: '1805010219',
-        bookNumber: '12378',
-        borrowDate: '2022-12-20 16:48:44',
-        closeDate:'2023-02-08 16:49:37',
-        returnDate:'2022-12-23 13:10:45',
-        violationMessage:'',
-        violationAdmin:'root',
-        }, ],
+      tableData: [],
         queryInfo: {
         pageNum: 1,
         pageSize: 5,
@@ -173,6 +141,7 @@ export default {
         违章信息:"violationMessage",
         处理人:"violationAdmin"
       },
+      loading:true
     };
   },
   methods: {
@@ -185,11 +154,13 @@ export default {
         this.getBorrowStatement();
       },
       async getBorrowStatement(){
+        this.loading = true;
         const {data:res} = await this.$http.post('bookadmin/get_borrow_statement',this.queryInfo)
         // console.log(res);
         this.tableData = [];
       if (res.status !== 200) {
         this.total = 0;
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -198,6 +169,7 @@ export default {
       });
       this.tableData = res.data.records;
       this.total = res.data.total;
+      this.loading = false;
       },
       downLoad() {
       this.getPdf(this.title); //参数是下载的pdf文件名

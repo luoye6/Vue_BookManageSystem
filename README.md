@@ -1,11 +1,12 @@
 ## ☀️新手必读
 
-+ 本项目拥有完整的API后台接口文档（文尾)
++ 本项目拥有完整的API后台接口文档（文尾)(重点⭐)
 + 项目部署视频正在录制
 + 如果项目对您有所帮助，可以Star⭐一下，受到鼓励的我会继续加油。
 + [项目在线演示地址](https://abc.xiaobaitiao.club/)
 + [项目前端地址](https://gitee.com/falle22222n-leaves/vue_-book-manage-system)
 + [项目后端地址](https://gitee.com/falle22222n-leaves/vue_-book-manage-system_backend)
++ [项目部署视频](https://www.bilibili.com/video/BV1314y1Z7SS/?pop_share=1&vd_source=e40a9464b71684502f289cff3f51514f)
 
 ## ☀️技术栈介绍
 
@@ -62,7 +63,7 @@
 
 + 遇到交互功能错误，或者页面无法打开，请用开发者工具F12查看请求和响应状态码情况，当然可能小白不懂，那也没关系，可以加我**QQ：909088445**。白天上课，晚上有空才能回答，感谢体谅！⭐⭐⭐
 
-## ☀️项目详细介绍
+## ☀️项目详细介绍（亮点)
 
 + 本项目采用前后端分离的模式，前端构建页面，后端作数据接口，前端调用后端数据接口得到数据，重新渲染页面。
 + 后端已开启CORS跨域支持
@@ -70,10 +71,17 @@
 + 前端在Authorization字段提供token令牌
 + 使用HTTP Status Code表示状态
 + 数据返回格式使用JSON
++ 后端采用权限拦截器进行权限校验，并检查登录情况
++ 添加全局异常处理机制，捕获异常，增强系统健壮性
++ 前端用Echarts可视化库实现了图书借阅的分析图标（折线图、饼图），并通过loading配置提高加载体验。
++ 留言组件采用弹幕形式，贴合用户的喜好。
++ 引入knife4j依赖，使用 Swagger + Knife4j 自动生成 OpenAPI 规范的接口文档，前端可以在此基础上使用插件自动生成接口请求代码，降低前后端协作成本
++ 使用ElementUI组件库进行前端界面搭建，快速实现页面生成，并实现了前后端统一权限管理，多环境切换等能力。
++ 基于MyBatis Plus框架的QueryWrapper实现对MySQL数据库的灵活查询，并配合MyBatisX插件自动生成后端CRUD基础代码，减少重复工作。
 
 ### ⭐用户模块功能介绍
 
-![image-20230224172345782](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224172345782.png)
+![img](http://xxx.xiaobaitiao.club/project/%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D.png)
 
 + 图书查询功能：分页构造器缓解数据过大压力，后端可设置请求数防止爬虫请求数过大，服务器负载过大。模糊查询进行字段搜索。表格均可导出PDF和EXCEL。
 + 读者规则功能：查询现有的借阅规则，借阅规则包括：借阅编号，可借阅图书数量，可借阅天数，可借阅图书馆，过期扣费/天。
@@ -87,7 +95,7 @@
 
 ### ⭐图书管理员模块功能介绍
 
-![image-20230224195415538](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224195415538.png)
+![image-20230311151434774](http://xxx.xiaobaitiao.club/project/%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E5%91%98%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%9B%BE.png)
 
 + 借阅图书: 图书管理员输入借阅证号(用户)和要借的图书编号和当前的时间，点击借阅。
 + 归还图书: 输入图书编号查看图书是否逾期，并且可以设置违规信息，然后选择是否归还图书
@@ -98,7 +106,7 @@
 
 ### ⭐系统管理员模块功能介绍
 
-![image-20230224195930279](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224195930279.png)
+![image-20230311151453931](http://xxx.xiaobaitiao.club/project/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%91%98%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D%E5%9B%BE.png)
 
 + 书籍管理: 可以查询当前的所有图书，显示图书编号，图书昵称，作者，图书馆，分类，位置，状态，描述。可以进行添加，修改，删除图书。利用分页构造器实现批量查询。利用模糊查询实现图书搜索功能。利用插件实现PDF和EXCEL导出。
 + 书籍类型: 显示查询当前的所有图书类型，可以进行添加，修改，删除图书类型，利用分页构造器实现批量查询，缓解数据压力。
@@ -245,57 +253,57 @@
 
 **首页轮播图演示**
 
-![image-20230224201715408](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201715408.png)
+![image-20230311151755217](http://xxx.xiaobaitiao.club/project/%E9%A6%96%E9%A1%B5%E8%BD%AE%E6%92%AD%E5%9B%BE%E6%BC%94%E7%A4%BA.png)
 
 **图书查询演示**
 
-![image-20230224201735395](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201735395.png)
+![image-20230311151815350](http://xxx.xiaobaitiao.club/project/%E5%9B%BE%E4%B9%A6%E6%9F%A5%E8%AF%A2%E6%BC%94%E7%A4%BA.png)
 
 **读者规则演示**
 
-![image-20230224201754470](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201754470.png)
+![image-20230311151837692](http://xxx.xiaobaitiao.club/project/%E8%AF%BB%E8%80%85%E8%A7%84%E5%88%99%E6%BC%94%E7%A4%BA.png)
 
 **查看公告演示**
 
-![image-20230224201826551](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201826551.png)
+![image-20230311151858285](http://xxx.xiaobaitiao.club/project/%E6%9F%A5%E7%9C%8B%E5%85%AC%E5%91%8A%E6%BC%94%E7%A4%BA.png)
 
 **个人信息演示**
 
-![image-20230224201847579](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201847579.png)
+![image-20230311151918353](http://xxx.xiaobaitiao.club/project/%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E6%BC%94%E7%A4%BA.png)
 
 **借阅信息演示**
 
-![image-20230224201920560](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201920560.png)
+![image-20230311151939885](http://xxx.xiaobaitiao.club/project/%E5%80%9F%E9%98%85%E4%BF%A1%E6%81%AF%E6%BC%94%E7%A4%BA.png)
 
 **违章信息演示**
 
-![image-20230224201938634](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224201938634.png)
+![image-20230311151958147](http://xxx.xiaobaitiao.club/project/%E8%BF%9D%E7%AB%A0%E4%BF%A1%E6%81%AF%E6%BC%94%E7%A4%BA.png)
 
 **读者留言演示**
 
-![image-20230224202007128](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202007128.png)
+![image-20230311152043122](http://xxx.xiaobaitiao.club/project/%E8%AF%BB%E8%80%85%E7%95%99%E8%A8%80%E6%BC%94%E7%A4%BA.png)
 
 ### 图书管理员功能图
 
 **借阅图书演示**
 
-![image-20230224202136525](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202136525.png)
+![image-20230311152118721](http://xxx.xiaobaitiao.club/project/%E5%80%9F%E9%98%85%E5%9B%BE%E4%B9%A6%E6%BC%94%E7%A4%BA.png)
 
 **归还图书演示**
 
-![image-20230224202201946](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202201946.png)
+![image-20230311152136821](http://xxx.xiaobaitiao.club/project/%E5%BD%92%E8%BF%98%E5%9B%BE%E4%B9%A6%E6%BC%94%E7%A4%BA.png)
 
 **借书报表演示**
 
-![image-20230224202220799](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202220799.png)
+![image-20230311152220983](http://xxx.xiaobaitiao.club/project/%E5%80%9F%E4%B9%A6%E6%8A%A5%E8%A1%A8.png)
 
 **还书报表演示**
 
-![image-20230224202242175](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202242175.png)
+![image-20230311152251587](http://xxx.xiaobaitiao.club/project/%E8%BF%98%E4%B9%A6%E6%8A%A5%E8%A1%A8.png)
 
 **发布公告演示**
 
-![image-20230224202300880](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202300880.png)
+![image-20230311152310736](http://xxx.xiaobaitiao.club/project/%E5%8F%91%E5%B8%83%E5%85%AC%E5%91%8A%E6%BC%94%E7%A4%BA.png)
 
 ### 系统管理员功能图
 
@@ -303,17 +311,17 @@
 
 **系统管理演示**
 
-![image-20230224202410649](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224202410649.png)
+![image-20230311152338284](http://xxx.xiaobaitiao.club/project/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86.png)
 
 ## 🐼部署项目
 
-![image-20230224205310278](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/image-20230224205310278.png)
+![image-20230311152411864](http://xxx.xiaobaitiao.club/project/%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA1.png)
 
 + 可以下载ZIP压缩包或者使用克隆(Git clone)
 + 复制http或者ssh的链接（github建议ssh,gittee都可以)
 + 在D盘新建一个文件夹，点击进入该文件夹，右键Git Bash Here
 
-![img](https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/da5376c09ecd46c9a2e410a39ae652f7.png)
+![image-20230311152442211](http://xxx.xiaobaitiao.club/project/%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA2.png)
 
 + 还没有下载Git或者不会Git的建议先看基础教程（30分钟左右)
 
@@ -354,17 +362,52 @@
 
 ## 🐼项目API接口文档
 
-+ 接口文档篇幅过大请加我QQ后私发
++ 接口文档篇幅过大
 + 本来想完全采用RESTFUL风格，做到一半忘记了
 + 看清楚文档的基准地址
++ 要API后端接口文档详细内容和数据库结构+内容一起的，将前后端**star**⭐的截图加我QQ：**909088445**发我即可领取~感谢支持
 
 ## 🐷其他
 
 + 个人博客地址: https://luoye6.github.io/
 + 个人博客采用Hexo+Github托管
 + 采用butterfly主题可以实现定制化
-<<<<<<< HEAD
 + 推荐有空闲时间的，可以花1-2天搭建个人博客用于记录笔记。
-=======
-+ 推荐有空闲时间的，可以花1-2天搭建个人博客用于记录笔记。
->>>>>>> remotes/github/main
+
+## **版本迭代**
+
+### 2023-3-19
+
+1.引入knife4j依赖，使用 Swagger + Knife4j 自动生成 OpenAPI 规范的接口文档，前端可以在此基础上使用插件自动生成接口请求代码，降低前后端协作成本。
+
+2.引入jsoup依赖可以自定义添加爬虫功能,可以批量添加图书并且是比较真实的数据。
+
+3.添加事务管理器，可以进行用@Transactional指定异常类型回滚和事务传播行为。
+
+### 2023-4-13
+
+1.手动在增加和删除逻辑较为复杂的数据库操作上，添加了@Transactional注解，遇到运行时异常直接回滚数据库，防止借书和还书出现逻辑错误。
+
+2.修复11位图书编号无法借书的Bug,其原因是因为11位超出了Integer的2147483647(10位)。解决方法：数据库改为BigInt,Java改为Long。
+
+3.**注意**：不要随便删除用户和公告！！！会导致其他人体验的时候出现逻辑错误！！！请明白了项目逻辑再去做删除操作！！！感谢配合！！！
+
+4.下一期准备优化图表的展示，逾期图书后告警通知之类的功能，感谢大家的支持，我会继续维护和优化功能，有Bug可以加我QQ或者提出issue,勿要恶意利用bug，再次鸣谢。
+
+5.劳动节准备录一期部署项目的视频会发到b站，到时候会将部署讲清楚，方便大家课设或者毕设的完成，此项目有数据库表设计、API接口文档、内容功能介绍、亮点介绍，唯一缺少的可能是数据流图、ER图之类的，star的人多了，我会添加上去。
+
+### 2023-5-1
+
+1.添加“系统管理员”权限的系统管理功能，添加借书类型分析统计图（饼图）采用Echarts。
+
+2.优化请求在没有收到数据时的显示卡顿的情况，添加“加载中”状态,使用v-loading(ElementUI组件库)，优化用户人机交互体验，在服务器调用接口缓慢的情况下，给予良好的交互。
+
+3.轮播图优化：压缩图片体积，另外使用Swiper的懒加载，实现图片加载中状态，然后图片完全加载完成后才显示图片，优化用户体验过程。
+
+4.后端新增自定义错误码枚举类，可以自定义状态码进行返回，保留原有枚举类。
+
+5.前端优化部分表格内容展示，当纵向内容过长，设置了表格最大高度，超出就会显示滑动窗口。优化表格列宽度，提高表格美观度。
+
+6.添加书籍管理组件的批量删除图书功能，优化管理员体验，不用单个删除图书，提高效率。
+
+7.Jmeter进行压力测试，服务器接口在100个用户并发发送请求的情况下，QPS达到50以上。

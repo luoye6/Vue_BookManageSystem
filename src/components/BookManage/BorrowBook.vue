@@ -47,7 +47,7 @@ export default {
       // console.log(this.borrowInfo.borrowDate);
       this.borrowInfo.bookAdminId = parseInt(window.sessionStorage.getItem('bookAdminId')) 
       const {data:res} = await this.$http.post('bookadmin/borrow_book',this.borrowInfo)
-      // console.log(res);
+      console.log(res);
       if(res.status !== 200){
         return this.$message.error(res.msg)
       }

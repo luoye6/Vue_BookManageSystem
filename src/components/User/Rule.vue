@@ -6,6 +6,10 @@
     <div class="banner">
       <el-tooltip
       v-for="item in ruleList"
+      v-loading="loading"
+        element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
       :key="item.ruleId"
         effect="dark"
         placement="right"
@@ -20,6 +24,7 @@
 </template>
 
 <script>
+import { Loading } from 'element-ui';
 export default {
   data(){
     return {
@@ -36,19 +41,22 @@ export default {
           
         }
 
-      ]
+      ],
+      loading:true
     }
   },
   methods:{
    async  getRuleList(){
       const {data:res} = await this.$http.get("user/get_rulelist")
       if(res.status !== 200){
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
         message:res.msg,
         duration:1000
       })
+      this.loading = false;
       this.ruleList = res.data
     }
   },

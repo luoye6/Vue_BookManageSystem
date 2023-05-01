@@ -38,7 +38,11 @@
         </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe  id="pdfDom" :default-sort = "{prop: 'typeId', order: 'ascending'}">
+      <el-table :data="tableData" border style="width: 100%" stripe  id="pdfDom" :default-sort = "{prop: 'typeId', order: 'ascending'}"
+      v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-table-column prop="typeId" label="ID" sortable> </el-table-column>
         <el-table-column prop="typeName" label="分类名"> </el-table-column>
         <el-table-column prop="typeContent" label="描述"> </el-table-column>
@@ -192,6 +196,7 @@ export default {
         类别昵称: "typeName",
         类别概述: "typeContent",
       },
+      loading:true
     };
   },
   methods: {
@@ -260,12 +265,14 @@ export default {
       this.addDialogVisible = true;
     },
     async getBookTypeList() {
+      this.loading = true;
       const { data: res } = await this.$http.post(
         "admin/get_booktype_page",
         this.queryInfo
       );
       // console.log(res);
       if (res.status !== 200) {
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success(
@@ -276,6 +283,7 @@ export default {
       )
       this.tableData = res.data.records;
       this.total = res.data.total;
+      this.loading = false;
     },
     async addBookType() {
       this.$refs.addFormRef.validate(async (valid) => {

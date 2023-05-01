@@ -15,7 +15,11 @@
         </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe>
+      <el-table :data="tableData" border style="width: 100%" stripe
+      v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-table-column prop="noticeId" label="ID"> </el-table-column>
         <el-table-column prop="noticeTitle" label="标题"> </el-table-column>
         <el-table-column prop="noticeContent" label="公告"> </el-table-column>
@@ -180,27 +184,33 @@ export default {
         pageSize: 5,
       },
       total: 0,
+      loading:true
     };
   },
   methods: {
     handleSizeChange(val) {
       this.queryInfo.pageSize = val;
+
       this.getNoticeList();
     },
     handleCurrentChange(val) {
       this.queryInfo.pageNum = val;
+
       this.getNoticeList();
     },
     //让修改公告的对话框可见,并从数据库中回显数据
     async showEditDialog(id) {
+      this.loading = true;
       const {data:res} = await this.$http.get('bookadmin/get_notice/'+id);
       if(res.status !== 200){
+      
         return this.$message.error(res.msg)
       }
-      console.log(res);
+      // console.log(res);
       this.editForm = res.data;
       // 让修改公告的对话框可见
       this.editDialogVisible = true;
+      
     },
     //监听修改对话框的关闭，一旦对话框关闭，就重置表单，回显数据
     editDialogClosed() {
@@ -260,12 +270,14 @@ export default {
         this.addDialogVisible = true;
     },
     async getNoticeList(){
+      this.loading = true;
       const {data:res} = await this.$http.post('bookadmin/get_noticelist',this.queryInfo)
       // console.log(res);
       
       this.tableData = [];
       if (res.status !== 200) {
         this.total = 0;
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -274,6 +286,7 @@ export default {
       });
       this.tableData = res.data.records;
       this.total = res.data.total;
+      this.loading = false;
     },
     async addNotice(){
       // 取消可见性

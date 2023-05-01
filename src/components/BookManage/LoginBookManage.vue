@@ -5,7 +5,7 @@
       <!-- 头像区域 -->
       <div class="avatar_box">
         <img
-          src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/newLogo.png"
+          src="https://xxx.xiaobaitiao.club/img/%E5%B0%8F%E6%81%90%E9%BE%99.png"
           alt=""
         />
       </div>
@@ -155,7 +155,7 @@ export default {
 }
 .login_container {
   // background-color: #2b4b6b;
-  background: url(https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/digitalCityMin.png)
+  background: url(http://xxx.xiaobaitiao.club/img/digitalCityMin.png)
     no-repeat 0px 0px;
   background-size: cover;
   height: 100%;
