@@ -33,7 +33,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="login">登录</el-button>
+          <el-button type="primary" @click="login" :loading="loginLoading">登录</el-button>
           <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -103,6 +103,7 @@ export default {
           },
         ],
       },
+      loginLoading: false
     };
   },
   methods: {
@@ -116,16 +117,26 @@ export default {
         if (!valid) {
           return;
         }
+        this.loginLoading = true;
+        // 进行md5加密
+        const salt = "xiaobaitiao";
+        const username = this.loginForm.username;
+        const password = CryptoJS.MD5(salt + this.loginForm.password).toString();
         //向数据库发送axios请求，如果登录成功，就跳转
         const { data: res } = await this.$http.post(
           "admin/login",
-          this.loginForm
+          {
+            username,
+            password
+          }
         );
         // console.log(res);
         if (res.status !== 200) {
+          this.loginLoading = false;
           return this.$message.error(res.msg);
         }
         this.$message.success("登录成功");
+        this.loginLoading = false;
         // console.log(res);
         window.sessionStorage.setItem("token", res.map.token);
         window.sessionStorage.setItem("adminId", res.map.id);

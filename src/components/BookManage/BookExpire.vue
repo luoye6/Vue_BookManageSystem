@@ -99,6 +99,14 @@ export default {
         this.returnInfo.bookNumber = this.expireInfo.bookNumber;
     },
     async returnBook(){
+        // 对表单参数进行校验
+        if(this.returnInfo.returnDate===""){
+          this.$message.error({
+            message:"归还日期不能为空",
+            duration:1000
+          })
+          return;
+        }
         this.returnInfo.violationAdminId = parseInt(window.sessionStorage.getItem('bookAdminId'))
         const {data:res} = await this.$http.post('bookadmin/return_book',this.returnInfo)
         // console.log(res);

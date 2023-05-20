@@ -62,6 +62,9 @@ axios.interceptors.response.use(response => {
     window.sessionStorage.clear();
     // 跳转到登录页面
     router.replace('/login')
+  }else if (response.data.status === 404){
+    Message.error('访问的页面不存在');
+    router.replace('/404');
   }
   return response
 })

@@ -1,69 +1,49 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import LoginManage from '../components/BookManage/LoginBookManage.vue'
-import Home from '../components/Home/Home.vue'
-import Index from '../components/Index/Index.vue'
-import Search from '../components/Book/Search.vue'
-import Rule from '../components/User/Rule.vue'
-import Notice from '../components/User/Notice.vue'
-import Information from  '../components/User/Information.vue'
-import Borrow from '../components/User/Borrow.vue'
-import Violation from '../components/User/Violation.vue'
-import Comment from '../components/User/Comment.vue'
-import HomeManage from '../components/Home/HomeManage.vue'
-import BorrowBook from '../components/BookManage/BorrowBook.vue'
-import ReturnBook from '../components/BookManage/ReturnBook.vue'
-import BorrowStatement from '../components/BookManage/BorrowStatement.vue'
-import ReturnStatement from '../components/BookManage/ReturnStatement.vue'
-import NoticeManage from '../components/BookManage/NoticeManage.vue'
-import BookExpire from '../components/BookManage/BookExpire.vue'
-import LoginAdmin from '../components/Admin/LoginAdmin.vue'
-import HomeAdmin from '../components/Admin/HomeAdmin.vue'
-import BookManage from '../components/Admin/BookManage.vue'
-import BookType from '../components/Admin/BookType.vue'
-import StatementManage from '../components/Admin/StatementManage.vue'
-import StatementSearch from '../components/Admin/StatementSearch.vue'
-import StatementRuleManage from '../components/Admin/StatementRuleManage.vue'
-import BookAdminManage from '../components/Admin/BookAdminManage.vue'
-import AdminManage from '../components/Admin/AdminManage.vue'
 Vue.use(VueRouter)
 
 const routes = [
  {path:'/',redirect:'/login'},
- {path:'/login',component:Login},
- {path:'/loginmanage',component:LoginManage},
-{path:'/home',component:Home,redirect:'/index',
+ {path:'/login',component:()=>import('@/components/Login.vue')},
+ {path:'/loginmanage',component:()=>import('@/components/BookManage/LoginBookManage.vue')},
+{path:'/home',component:()=>import('@/components/Home/Home.vue'),redirect:'/index',
 children:[
-  {path:'/index',component:Index},
-  {path:'/search',component:Search},
-  {path:'/rule',component:Rule},
-  {path:'/notice',component:Notice},
-  {path:'/information',component:Information},
-  {path:'/borrow',component:Borrow},
-  {path:'/violation',component:Violation},
-  {path:'/comment',component:Comment}
+  {path:'/index',component:()=>import('@/components/Index/Index.vue')},
+  {path:'/search',component:()=>import('@/components/Book/Search.vue')},
+  {path:'/rule',component:()=>import('@/components/User/Rule.vue')},
+  {path:'/notice',component:()=>import('@/components/User/Notice.vue')},
+  {path:'/information',component:()=>import('@/components/User/Information.vue')},
+  {path:'/borrow',component:()=>import('@/components/User/Borrow.vue')},
+  {path:'/violation',component:()=>import('@/components/User/Violation.vue')},
+  {path:'/comment',component:()=>import('@/components/User/Comment.vue')}
 ]},
-{path:'/homemange',component:HomeManage,
+{path:'/homemange',component:()=>import('@/components/Home/HomeManage.vue'),
   children:[
-    {path:'/borrowbook',component:BorrowBook},
-    {path:'/returnbook',component:ReturnBook},
-    {path:'/borrowstatement',component:BorrowStatement},
-    {path:'/returnstatement',component:ReturnStatement},
-    {path:'/noticemanage',component:NoticeManage},
-    {path:'/bookexpire',name:"bookexpire",component:BookExpire}
+    {path:'/borrowbook',component:()=>import('@/components/BookManage/BorrowBook.vue')},
+    {path:'/returnbook',component:()=>import('@/components/BookManage/ReturnBook.vue')},
+    {path:'/borrowstatement',component:()=>import('@/components/BookManage/BorrowStatement.vue')},
+    {path:'/returnstatement',component:()=>import('@/components/BookManage/ReturnStatement.vue')},
+    {path:'/noticemanage',component:()=>import('@/components/BookManage/NoticeManage.vue')},
+    {path:'/bookexpire',name:"bookexpire",component:()=>import('@/components/BookManage/BookExpire.vue')}
   ]},
-  {path:'/loginadmin',component:LoginAdmin},
-  {path:'/homeadmin',component:HomeAdmin,
+  {path:'/loginadmin',component:()=>import('@/components/Admin/LoginAdmin.vue')},
+  {path:'/homeadmin',component:()=>import('@/components/Admin/HomeAdmin.vue'),
   children:[
-    {path:'/bookmanage',component:BookManage},
-    {path:'/booktype',component:BookType},
-    {path:'/statementmanage',component:StatementManage},
-    {path:'/statementsearch',component:StatementSearch},
-    {path:'/statementrulemanage',component:StatementRuleManage},
-    {path:'/bookadminmanage',component:BookAdminManage},
-    {path:'/adminmanage',component:AdminManage}
-  ]}
+    {path:'/bookmanage',component:()=>import('@/components/Admin/BookManage.vue')},
+    {path:'/booktype',component:()=>import('@/components/Admin/BookType.vue')},
+    {path:'/statementmanage',component:()=>import('@/components/Admin/StatementManage.vue')},
+    {path:'/statementsearch',component:()=>import('@/components/Admin/StatementSearch.vue')},
+    {path:'/statementrulemanage',component:()=>import('@/components/Admin/StatementRuleManage.vue')},
+    {path:'/bookadminmanage',component:()=>import( '@/components/Admin/BookAdminManage.vue')},
+    {path:'/adminmanage',component:()=>import('@/components/Admin/AdminManage.vue')}
+  ]},
+  {
+    path:'/404',component:()=>import('@/components/404/404.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
+}
 
 ]
 
