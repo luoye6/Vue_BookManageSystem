@@ -58,6 +58,12 @@
             >导出PDF</el-button
           >
         </el-col>
+        <el-col :span="2" style="float: right">
+         
+         <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen"
+           >全屏</el-button
+         >
+       </el-col>
       </el-row>
       <!-- 表格区域 -->
       <el-table
@@ -185,10 +191,23 @@ export default {
     },
     downLoad(){
       this.getPdf(this.title);//参数是下载的pdf文件名
+    },
+    fullScreen(){
+          // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
+    let full = document.fullscreenElement;
+    // 切换为全屏模式
+    if(!full){
+        // 文档根节点的方法requestFullscreen实现全屏模式
+        document.documentElement.requestFullscreen();
+    }else{
+        // 退出全屏模式
+        document.exitFullscreen();
+    }
     }
   },
 };
 </script>
 
-<style>
+<style lang="css">
+
 </style>
