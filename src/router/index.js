@@ -14,13 +14,14 @@ const routes = [
           title: "首页"
         }
       },
-      { path: '/search', component: () => import('@/components/Book/Search.vue') },
+      { path: '/search', component: () => import('@/components/User/Search.vue') },
       { path: '/rule', component: () => import('@/components/User/Rule.vue') },
       { path: '/notice', component: () => import('@/components/User/Notice.vue') },
       { path: '/information', component: () => import('@/components/User/Information.vue') },
       { path: '/borrow', component: () => import('@/components/User/Borrow.vue') },
       { path: '/violation', component: () => import('@/components/User/Violation.vue') },
-      { path: '/comment', component: () => import('@/components/User/Comment.vue') }
+      { path: '/comment', component: () => import('@/components/User/Comment.vue') },
+      {path:'/intelligent',component:()=>import('@/components/User/Intelligent.vue')}
     ]
   },
   {
@@ -36,7 +37,7 @@ const routes = [
   },
   { path: '/loginadmin', component: () => import('@/components/Admin/LoginAdmin.vue') },
   {
-    path: '/homeadmin', component: () => import('@/components/Admin/HomeAdmin.vue'),
+    path: '/homeadmin', component: () => import('@/components/Home/HomeAdmin.vue'),
     children: [
       { path: '/bookmanage', component: () => import('@/components/Admin/BookManage.vue') },
       { path: '/booktype', component: () => import('@/components/Admin/BookType.vue') },
@@ -44,7 +45,8 @@ const routes = [
       { path: '/statementsearch', component: () => import('@/components/Admin/StatementSearch.vue') },
       { path: '/statementrulemanage', component: () => import('@/components/Admin/StatementRuleManage.vue') },
       { path: '/bookadminmanage', component: () => import('@/components/Admin/BookAdminManage.vue') },
-      { path: '/adminmanage', component: () => import('@/components/Admin/AdminManage.vue') }
+      { path: '/adminmanage', component: () => import('@/components/Admin/AdminManage.vue') },
+      {path:'/intelligent_analysis',component:()=>import('@/components/Admin/IntelligentAnalysis.vue')}
     ]
   },
   {

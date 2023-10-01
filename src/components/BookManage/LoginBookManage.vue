@@ -36,7 +36,9 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="login" :loading="loginLoading">登录</el-button>
+          <el-button type="primary" @click="login" :loading="loginLoading"
+            >登录
+          </el-button>
           <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -68,15 +70,17 @@
     </div>
     <div class="footer2">
       <p>
-        ©2022-2022 By 小白条<br /><a href="https://beian.miit.gov.cn"
+        ©2022-2023 By 小白条<br /><a href="https://beian.miit.gov.cn"
           >备案号:浙ICP备2022034182号</a
         >
       </p>
     </div>
   </div>
 </template>
-    
-    <script>
+
+<script>
+import CryptoJS from "crypto-js";
+
 export default {
   data() {
     return {
@@ -106,7 +110,7 @@ export default {
           },
         ],
       },
-      loginLoading: false
+      loginLoading: false,
     };
   },
   methods: {
@@ -155,17 +159,19 @@ export default {
   },
 };
 </script>
-    
-    <style lang="less" scoped>
+
+<style lang="less" scoped>
 .footer2 {
   position: absolute;
   bottom: 0px;
   left: 45%;
   color: #ccc;
+
   a {
     color: #ccc;
   }
 }
+
 .login_container {
   // background-color: #2b4b6b;
   background: url(http://xxx.xiaobaitiao.club/img/digitalCityMin.png) no-repeat
@@ -173,6 +179,7 @@ export default {
   background-size: cover;
   height: 100%;
 }
+
 .login_box {
   height: 300px;
   width: 450px;
@@ -182,6 +189,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   .avatar_box {
     width: 130px;
     height: 130px;
@@ -193,6 +201,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
+
     img {
       width: 100%;
       height: 100%;
@@ -201,6 +210,7 @@ export default {
     }
   }
 }
+
 .login_form {
   position: absolute;
   bottom: 0;
@@ -208,10 +218,12 @@ export default {
   padding: 0 20px;
   box-sizing: border-box;
 }
+
 .btns {
   display: flex;
   justify-content: flex-end;
 }
+
 .login_title {
   position: relative;
   top: 5%;
@@ -222,6 +234,7 @@ export default {
   //控制字体间距
   letter-spacing: 10px;
 }
+
 .footer {
   display: flex;
   position: absolute;

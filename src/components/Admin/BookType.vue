@@ -53,6 +53,7 @@
         <el-table-column prop="typeName" label="分类名"> </el-table-column>
         <el-table-column prop="typeContent" label="描述"> </el-table-column>
         <el-table-column label="操作">
+        
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-tooltip
@@ -288,7 +289,7 @@ export default {
         }
       )
       this.tableData = res.data.records;
-      this.total = res.data.total;
+       this.total = parseInt(res.data.total);
       this.loading = false;
     },
     async addBookType() {

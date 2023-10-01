@@ -9,7 +9,8 @@
       <!-- 搜索内容和导出区域 -->
       <el-row>
         <el-col :span="6"
-          >条件搜索:<el-select
+          >条件搜索:
+          <el-select
             v-model="queryInfo.condition"
             filterable
             placeholder="请选择"
@@ -35,8 +36,9 @@
               slot="append"
               icon="el-icon-search"
               @click="searchBookByPage"
-            ></el-button> </el-input
-        ></el-col>
+            ></el-button>
+          </el-input>
+        </el-col>
         <el-col :span="2" style="float: right">
           <download-excel
             class="export-excel-wrapper"
@@ -47,23 +49,28 @@
           >
             <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
             <el-button type="primary" class="el-icon-printer" size="mini"
-              >导出Excel</el-button
-            >
+              >导出Excel
+            </el-button>
           </download-excel>
-      
         </el-col>
         <el-col :span="2" style="float: right">
-         
-          <el-button type="primary" class="el-icon-printer" size="mini" @click="downLoad"
-            >导出PDF</el-button
-          >
+          <el-button
+            type="primary"
+            class="el-icon-printer"
+            size="mini"
+            @click="downLoad"
+            >导出PDF
+          </el-button>
         </el-col>
         <el-col :span="2" style="float: right">
-         
-         <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen"
-           >全屏</el-button
-         >
-       </el-col>
+          <el-button
+            type="success"
+            class="el-icon-full-screen"
+            size="mini"
+            @click="fullScreen"
+            >全屏
+          </el-button>
+        </el-col>
       </el-row>
       <!-- 表格区域 -->
       <el-table
@@ -73,19 +80,31 @@
         style="width: 100%; font-size: 14px"
         v-loading="loading"
         element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
         id="pdfDom"
-        :default-sort = "{prop: 'bookNumber', order: 'ascending'}"
+        :default-sort="{ prop: 'bookNumber', order: 'ascending' }"
         stripe
       >
-        <el-table-column prop="bookNumber" label="图书编号" sortable> </el-table-column>
-        <el-table-column prop="bookName" label="图书名称"> </el-table-column>
-        <el-table-column prop="bookAuthor" label="作者" > </el-table-column>
-        <el-table-column prop="bookLibrary" label="图书馆"> </el-table-column>
-        <el-table-column prop="bookType" label="分类"> </el-table-column>
-        <el-table-column prop="bookLocation" label="位置" sortable> </el-table-column>
-        <el-table-column prop="bookStatus" label="状态" sortable> </el-table-column>
+        <el-table-column
+          prop="bookNumber"
+          label="图书编号"
+          sortable
+        ></el-table-column>
+        <el-table-column prop="bookName" label="图书名称"></el-table-column>
+        <el-table-column prop="bookAuthor" label="作者"></el-table-column>
+        <el-table-column prop="bookLibrary" label="图书馆"></el-table-column>
+        <el-table-column prop="bookType" label="分类"></el-table-column>
+        <el-table-column
+          prop="bookLocation"
+          label="位置"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="bookStatus"
+          label="状态"
+          sortable
+        ></el-table-column>
         <el-table-column prop="bookDescription" label="描述" width="600px">
         </el-table-column>
       </el-table>
@@ -130,9 +149,7 @@ export default {
           label: "描述",
         },
       ],
-      tableData: [
-      
-      ],
+      tableData: [],
       queryInfo: {
         pageNum: 1,
         pageSize: 5,
@@ -152,7 +169,7 @@ export default {
         状态: "bookStatus",
         描述: "bookDescription",
       },
-      loading: true
+      loading: true,
     };
   },
   created() {
@@ -161,12 +178,12 @@ export default {
   methods: {
     handleSizeChange(val) {
       this.queryInfo.pageSize = val;
- 
+
       this.searchBookByPage();
     },
     handleCurrentChange(val) {
       this.queryInfo.pageNum = val;
-    
+
       this.searchBookByPage();
     },
     async searchBookByPage() {
@@ -187,27 +204,25 @@ export default {
       });
       this.loading = false;
       this.tableData = res.data.records;
-      this.total = res.data.total;
+      this.total = parseInt(res.data.total);
     },
-    downLoad(){
-      this.getPdf(this.title);//参数是下载的pdf文件名
+    downLoad() {
+      this.getPdf(this.title); //参数是下载的pdf文件名
     },
-    fullScreen(){
-          // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
-    let full = document.fullscreenElement;
-    // 切换为全屏模式
-    if(!full){
+    fullScreen() {
+      // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
+      let full = document.fullscreenElement;
+      // 切换为全屏模式
+      if (!full) {
         // 文档根节点的方法requestFullscreen实现全屏模式
         document.documentElement.requestFullscreen();
-    }else{
+      } else {
         // 退出全屏模式
         document.exitFullscreen();
-    }
-    }
+      }
+    },
   },
 };
 </script>
 
-<style lang="css">
-
-</style>
+<style lang="css"></style>

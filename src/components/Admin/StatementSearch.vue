@@ -174,7 +174,7 @@ export default {
         duration: 1000,
       });
       this.tableData = res.data.records;
-      this.total = res.data.total;
+       this.total = parseInt(res.data.total);
       this.loading = false;
       },
       downLoad() {

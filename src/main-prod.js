@@ -44,6 +44,9 @@ Vue.prototype.$http = axios
 //导入NProgress包对应的js和CSS
 import  NProgress  from 'nprogress'
 import 'nprogress/nprogress.css'
+// 引入lodash
+import _ from 'lodash'
+Vue.prototype._ = _  //全局导入的挂载方式
 //在request拦截器中，展示进度条NProgress.start()
 axios.interceptors.request.use(config => {
   NProgress.start()

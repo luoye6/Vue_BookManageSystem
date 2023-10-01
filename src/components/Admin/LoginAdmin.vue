@@ -4,31 +4,31 @@
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="https://xxx.xiaobaitiao.club/img/%E5%B0%8F%E6%81%90%E9%BE%99.png" alt="" />
+        <img src="https://xxx.xiaobaitiao.club/img/%E5%B0%8F%E6%81%90%E9%BE%99.png" alt=""/>
       </div>
       <!-- 登录表单区域 -->
       <el-form
-        ref="loginFormRef"
-        :model="loginForm"
-        :rules="loginFormRules"
-        label-width="0px"
-        class="login_form"
+          ref="loginFormRef"
+          :model="loginForm"
+          :rules="loginFormRules"
+          label-width="0px"
+          class="login_form"
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input
-            v-model.trim="loginForm.username"
-            prefix-icon="iconfont icon-gerenxinxi"
+              v-model.trim="loginForm.username"
+              prefix-icon="iconfont icon-gerenxinxi"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
           <el-input
-            v-model="loginForm.password"
-            prefix-icon="iconfont icon-tianchongxing-"
-            type="password"
-            @keyup.enter.native="login"
-            :show-password="true"
+              v-model="loginForm.password"
+              prefix-icon="iconfont icon-tianchongxing-"
+              type="password"
+              @keyup.enter.native="login"
+              :show-password="true"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
@@ -39,22 +39,22 @@
       </el-form>
     </div>
     <vue-particles
-      class="login-bg"
-      color="#39AFFD"
-      :particleOpacity="0.7"
-      :particlesNumber="100"
-      shapeType="circle"
-      :particleSize="4"
-      linesColor="#8DD1FE"
-      :linesWidth="1"
-      :lineLinked="true"
-      :lineOpacity="0.4"
-      :linesDistance="150"
-      :moveSpeed="3"
-      :hoverEffect="true"
-      hoverMode="grab"
-      :clickEffect="true"
-      clickMode="push"
+        class="login-bg"
+        color="#39AFFD"
+        :particleOpacity="0.7"
+        :particlesNumber="100"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#8DD1FE"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
     >
     </vue-particles>
     <div class="footer">
@@ -65,15 +65,17 @@
     </div>
     <div class="footer2">
       <p>
-        ©2022-2022 By 小白条<br /><a href="https://beian.miit.gov.cn"
-          >备案号:浙ICP备2022034182号</a
-        >
+        ©2022-2023 By 小白条<br/><a href="https://beian.miit.gov.cn"
+      >备案号:浙ICP备2022034182号</a
+      >
       </p>
     </div>
   </div>
 </template>
-      
-      <script>
+
+<script>
+import CryptoJS from 'crypto-js';
+
 export default {
   data() {
     return {
@@ -85,7 +87,7 @@ export default {
       //登录表单规则的验证对象
       loginFormRules: {
         username: [
-          { required: true, message: "用户名不能为空", trigger: "blur" },
+          {required: true, message: "用户名不能为空", trigger: "blur"},
           {
             min: 3,
             max: 20,
@@ -94,7 +96,7 @@ export default {
           },
         ],
         password: [
-          { required: true, message: "密码不能为空", trigger: "blur" },
+          {required: true, message: "密码不能为空", trigger: "blur"},
           {
             min: 6,
             max: 15,
@@ -123,12 +125,12 @@ export default {
         const username = this.loginForm.username;
         const password = CryptoJS.MD5(salt + this.loginForm.password).toString();
         //向数据库发送axios请求，如果登录成功，就跳转
-        const { data: res } = await this.$http.post(
-          "admin/login",
-          {
-            username,
-            password
-          }
+        const {data: res} = await this.$http.post(
+            "admin/login",
+            {
+              username,
+              password
+            }
         );
         // console.log(res);
         if (res.status !== 200) {
@@ -149,24 +151,26 @@ export default {
   },
 };
 </script>
-      
-      <style lang="less" scoped>
+
+<style lang="less" scoped>
 .footer2 {
   position: absolute;
   bottom: 0px;
   left: 45%;
   color: #ccc;
+
   a {
     color: #ccc;
   }
 }
+
 .login_container {
   // background-color: #2b4b6b;
-  background: url(http://xxx.xiaobaitiao.club/img/digitalCityMin.png) no-repeat
-    0px 0px;
+  background: url(http://xxx.xiaobaitiao.club/img/digitalCityMin.png) no-repeat 0px 0px;
   background-size: cover;
   height: 100%;
 }
+
 .login_box {
   height: 300px;
   width: 450px;
@@ -176,6 +180,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   .avatar_box {
     width: 130px;
     height: 130px;
@@ -187,6 +192,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
+
     img {
       width: 100%;
       height: 100%;
@@ -195,6 +201,7 @@ export default {
     }
   }
 }
+
 .login_form {
   position: absolute;
   bottom: 0;
@@ -202,10 +209,12 @@ export default {
   padding: 0 20px;
   box-sizing: border-box;
 }
+
 .btns {
   display: flex;
   justify-content: flex-end;
 }
+
 .login_title {
   position: relative;
   top: 5%;
@@ -216,6 +225,7 @@ export default {
   //控制字体间距
   letter-spacing: 10px;
 }
+
 .footer {
   display: flex;
   position: absolute;

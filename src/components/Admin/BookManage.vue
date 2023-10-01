@@ -8,92 +8,55 @@
     <el-card shadow="always">
       <!-- 搜索内容和导出区域 -->
       <el-row :gutter="10">
-        <el-col :span="6"
-          >条件搜索:<el-select
-            v-model="queryInfo.condition"
-            filterable
-            placeholder="请选择"
-            style="margin-left: 15px"
-          >
-            <el-option
-              v-for="item in searchs"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
+        <el-col :span="6">条件搜索:<el-select v-model="queryInfo.condition" filterable placeholder="请选择"
+            style="margin-left: 15px">
+            <el-option v-for="item in searchs" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-col>
         <el-col :span="4">
-          <el-input
-            placeholder="请输入内容"
-            v-model="queryInfo.query"
-            class="input-with-select"
-            @keyup.enter.native="getBookList"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="getBookList"
-            ></el-button> </el-input
-        ></el-col>
-        <el-col :span="4">
-          <el-button type="primary" @click="showAddDialog()">
-            <i class="el-icon-plus"></i> 添加书籍</el-button
-          >
+          <el-input placeholder="请输入内容" v-model="queryInfo.query" class="input-with-select"
+            @keyup.enter.native="getBookList">
+            <el-button slot="append" icon="el-icon-search" @click="getBookList"></el-button> </el-input></el-col>
+        <el-col :span="2">
+          <el-button type="primary" @click="showAddDialog()" size="default">
+            <i class="el-icon-plus"></i> 添加书籍</el-button>
         </el-col>
-
+        <el-col :span="3" style="float:right">
+          <el-upload class="upload-demo" ref="upload" name="files" action="http://localhost:8889/api/admin/updown"
+            :on-preview="handlePreview" :on-remove="handleRemove"  :headers="headers" 
+            :file-list="fileList"
+            :on-success="onSuccess"
+            :auto-upload="false">
+            <el-button slot="trigger" size="mini" type="primary" title="从Excel批量导入图书">选取文件</el-button>
+            <el-button size="mini" type="success" @click="submitUpload" style="margin-left: 5px;">上传</el-button>
+          </el-upload>
+        </el-col>
         <el-col :span="2" style="float: right">
-          <download-excel
-            class="export-excel-wrapper"
-            :data="tableData"
-            :fields="json_fields"
-            :header="title"
-            name="书籍管理.xls"
-          >
+          <download-excel class="export-excel-wrapper" :data="tableData" :fields="json_fields" :header="title"
+            name="书籍管理.xls">
             <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
-            <el-button type="primary" class="el-icon-printer" size="mini"
-              >导出Excel</el-button
-            >
+            <el-button type="primary" class="el-icon-printer" size="mini">导出Excel</el-button>
           </download-excel>
         </el-col>
         <el-col :span="2" style="float: right">
-          <el-button
-            type="primary"
-            class="el-icon-printer"
-            size="mini"
-            @click="downLoad"
-            >导出PDF</el-button
-          >
+          <el-button type="primary" class="el-icon-printer" size="mini" @click="downLoad">导出PDF</el-button>
         </el-col>
         <el-col :span="2" style="float: right">
           <el-button type="warning" @click="removeBatch()" size="mini">
-            <i class="el-icon-delete"></i>批量删除</el-button
-          >
+            <i class="el-icon-delete"></i>批量删除</el-button>
         </el-col>
         <el-col :span="2" style="float: right">
-         
-         <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen"
-           >全屏</el-button
-         >
-       </el-col>
+
+          <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen">全屏</el-button>
+        </el-col>
       </el-row>
 
       <!-- 表格区域 -->
-      <el-table
-        :data="tableData"
-        border
-        height="520"
-        style="width: 100%"
-        stripe
-        id="pdfDom"
-        :default-sort="{ prop: 'bookNumber', order: 'ascending' }"
-        v-loading="loading"
-        element-loading-text="拼命加载中"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-        @selection-change="handleSelectionChange"
-      >
+      <el-table :data="tableData" border height="520" style="width: 100%" stripe id="pdfDom"
+        :default-sort="{ prop: 'bookNumber', order: 'ascending' }" v-loading="loading" element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)"
+        @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="bookNumber" label="图书编号" sortable>
@@ -115,61 +78,26 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-tooltip
-              effect="dark"
-              content="修改"
-              placement="top"
-              :enterable="false"
-            >
-              <el-button
-                type="primary"
-                icon="el-icon-edit"
-                size="mini"
-                @click="showEditDialog(scope.row.bookId)"
-              ></el-button
-            ></el-tooltip>
+            <el-tooltip effect="dark" content="修改" placement="top" :enterable="false">
+              <el-button type="primary" icon="el-icon-edit" size="mini"
+                @click="showEditDialog(scope.row.bookId)"></el-button></el-tooltip>
 
             <!-- 删除按钮 -->
-            <el-tooltip
-              effect="dark"
-              content="删除"
-              placement="top"
-              :enterable="false"
-            >
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                size="mini"
-                @click="removeUserById(scope.row.bookId)"
-              ></el-button>
+            <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
+              <el-button type="danger" icon="el-icon-delete" size="mini"
+                @click="removeUserById(scope.row.bookId)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
       <!-- 分页查询区域 -->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="queryInfo.pageNum"
-        :page-sizes="[1, 2, 3, 4, 5]"
-        :page-size="queryInfo.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="this.total"
-      >
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+        :current-page="queryInfo.pageNum" :page-sizes="[1, 2, 3, 4, 5]" :page-size="queryInfo.pageSize"
+        layout="total, sizes, prev, pager, next, jumper" :total="this.total">
       </el-pagination>
       <!-- 修改规则的对话框 -->
-      <el-dialog
-        title="修改书籍"
-        :visible.sync="editDialogVisible"
-        width="50%"
-        @close="editDialogClosed"
-      >
-        <el-form
-          :model="editForm"
-          ref="editFormRef"
-          :rules="editFormRules"
-          label-width="120px"
-        >
+      <el-dialog title="修改书籍" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
+        <el-form :model="editForm" ref="editFormRef" :rules="editFormRules" label-width="120px">
           <el-form-item label="书名" prop="bookName">
             <el-input v-model="editForm.bookName"></el-input>
           </el-form-item>
@@ -185,12 +113,7 @@
           </el-form-item>
           <el-form-item label="分类">
             <el-select v-model="editForm.bookType" placeholder="请选择">
-              <el-option
-                v-for="item in types"
-                :key="item.typeId"
-                :label="item.typeName"
-                :value="item.typeId"
-              >
+              <el-option v-for="item in types" :key="item.typeId" :label="item.typeName" :value="item.typeId">
               </el-option>
             </el-select>
           </el-form-item>
@@ -204,10 +127,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="书籍简介" prop="bookDescription">
-            <el-input
-              type="textarea"
-              v-model="editForm.bookDescription"
-            ></el-input>
+            <el-input type="textarea" v-model="editForm.bookDescription"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -216,18 +136,8 @@
         </span>
       </el-dialog>
       <!-- 添加书籍的对话框 -->
-      <el-dialog
-        title="添加书籍"
-        :visible.sync="addDialogVisible"
-        width="50%"
-        @close="addDialogClosed"
-      >
-        <el-form
-          :model="addForm"
-          ref="addFormRef"
-          :rules="addFormRules"
-          label-width="120px"
-        >
+      <el-dialog title="添加书籍" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+        <el-form :model="addForm" ref="addFormRef" :rules="addFormRules" label-width="120px">
           <el-form-item label="书名" prop="bookName">
             <el-input v-model="addForm.bookName"></el-input>
           </el-form-item>
@@ -243,12 +153,7 @@
           </el-form-item>
           <el-form-item label="分类">
             <el-select v-model="addForm.bookTypeNumber" placeholder="请选择">
-              <el-option
-                v-for="item in types"
-                :key="item.typeId"
-                :label="item.typeName"
-                :value="item.typeId"
-              >
+              <el-option v-for="item in types" :key="item.typeId" :label="item.typeName" :value="item.typeId">
               </el-option>
             </el-select>
           </el-form-item>
@@ -262,10 +167,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="书籍简介" prop="bookDescription">
-            <el-input
-              type="textarea"
-              v-model="addForm.bookDescription"
-            ></el-input>
+            <el-input type="textarea" v-model="addForm.bookDescription"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -395,6 +297,7 @@ export default {
       },
       loading: true,
       multipleSelection: [],
+      fileList: []
     };
   },
   methods: {
@@ -411,6 +314,12 @@ export default {
     },
     //让修改图书的对话框可见,并从数据库中回显数据
     async showEditDialog(id) {
+       // 发送axios请求 获取数据库中的书籍分类信息
+       const { data: res1 } = await this.$http.get("admin/get_type");
+      if (res1.status !== 200) {
+        return this.$message.error(res1.msg);
+      }
+      this.types = res1.data;
       // 让修改公告的对话框可见
       this.editDialogVisible = true;
       const { data: res } = await this.$http.get(
@@ -491,7 +400,7 @@ export default {
         duration: 1000,
       });
       this.tableData = res.data.records;
-      this.total = res.data.total;
+       this.total = parseInt(res.data.total);
       this.loading = false;
     },
     async addBook() {
@@ -531,22 +440,22 @@ export default {
     downLoad() {
       this.getPdf(this.title); //参数是下载的pdf文件名
     },
-        fullScreen(){
-          // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
-    let full = document.fullscreenElement;
-    // 切换为全屏模式
-    if(!full){
+    fullScreen() {
+      // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
+      let full = document.fullscreenElement;
+      // 切换为全屏模式
+      if (!full) {
         // 文档根节点的方法requestFullscreen实现全屏模式
         document.documentElement.requestFullscreen();
-    }else{
+      } else {
         // 退出全屏模式
         document.exitFullscreen();
-    }
+      }
     },
     // 批量删除图书
-    async removeBatch(){
-       //弹框，询问用户是否删除数据
-       const confirmResult = await this.$confirm(
+    async removeBatch() {
+      //弹框，询问用户是否删除数据
+      const confirmResult = await this.$confirm(
         "此操作将永久删除这些书籍, 是否继续?",
         "提示",
         {
@@ -564,39 +473,65 @@ export default {
         return this.$message.info("已经取消删除");
       }
       // 判断multipleSelection数组是否为空，为空的话进行提示
-      if(this.multipleSelection.length == 0){
+      if (this.multipleSelection.length == 0) {
         return this.$message.error({
-          message:"选中项为空，无法进行批量删除",
-          duration:1000
+          message: "选中项为空，无法进行批量删除",
+          duration: 1000
         });
       }
       //如果用户确认删除，那么下一步就是发送axios请求，检查响应状态码是否成功,成功则返回删除成功，否则返回删除失败
       // const { data: res } = await this.$http.get("admin/delete_book/" + id);
-      const {data: res} = await this.$http.delete("admin/delete_book_batch",{
-        data:this.multipleSelection
+      const { data: res } = await this.$http.delete("admin/delete_book_batch", {
+        data: this.multipleSelection
       });
       // console.log(res);
       if (res.status !== 200) {
         return this.$message.error({
-          message:res.msg,
-          duration:1000
+          message: res.msg,
+          duration: 1000
         });
       }
       this.$message.success({
-        message:res.msg,
-        duration:1000
+        message: res.msg,
+        duration: 1000
       });
       // 防止删除出现数据显示错误
       this.queryInfo.pageNum = 1;
       this.queryInfo.pageSize = 5;
       this.getBookList();
+    },
+    submitUpload() {
+      console.log(this.$refs.upload.data);
+      this.$refs.upload.submit();
+        this.$message.success({
+          duration: 1500,
+          message: "Excel批量导入图书成功"
+        })
+    },
+    handleRemove(file, fileList) {
+      console.log(file,fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    onSuccess(response, file, fileList){
+      // console.log(response);
+      // console.log(file);
+      // console.log(fileList);
     }
+   
   },
   created() {
     this.getBookList();
   },
+  computed: {
+    headers() {
+      return {
+        "Authorization": "Bearer " + window.sessionStorage.getItem('token')
+      };
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -148,6 +148,7 @@ export default {
   
     },
     async changePassword(){
+      
       const {data:res} = await this.$http.post('user/update_password',{
         password:this.editForm.password,
         userId:window.sessionStorage.getItem('userId')

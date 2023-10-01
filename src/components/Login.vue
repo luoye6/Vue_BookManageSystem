@@ -38,13 +38,14 @@
     </div>
     <div class="footer2">
       <p>
-        ©2022-2022 By 小白条<br /><a href="https://beian.miit.gov.cn">备案号:浙ICP备2022034182号</a>
+        ©2022-2023 By 小白条<br /><a href="https://beian.miit.gov.cn">备案号:浙ICP备2022034182号</a>
       </p>
     </div>
   </div>
 </template>
     
 <script>
+import CryptoJS from 'crypto-js';
 export default {
   data() {
     return {

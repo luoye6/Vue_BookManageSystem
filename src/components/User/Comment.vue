@@ -68,7 +68,15 @@ export default {
     };
   },
   methods: {
-    async addContent() {
+   addContent:_.throttle(async function(){
+      // 先判断文本内容是否为空或者是无意义的数字，如果是提示用户信息
+      if(this.input.trim()==''||/^\d+$/.test(this.input)||/^[a-zA-Z]+$/.test(this.input)){
+        this.$message.info({
+          message: "请不要输入无意义的内容",
+          duration:1000
+        })
+        return;
+      }
       // 文本框中内容赋值给barrage
       this.barrage.msg = this.input;
       //向数据库发送请求 addComment
@@ -81,7 +89,7 @@ export default {
       //重置内容框
       this.input = "";
       this.$message.success(res.msg);
-    },
+    },5000,{ trailing: false }),
     async getCommentList() {
       // 发送axios请求
       const { data: res } = await this.$http.get("user/get_commentlist");

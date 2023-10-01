@@ -11,11 +11,13 @@
   "dependencies": {
     "axios": "^1.2.1",
     "core-js": "^3.8.3",
+    "crypto-js": "^4.1.1",
     "default-passive-events": "^2.0.0",
     "echarts": "^5.4.1",
     "element-ui": "^2.4.5",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
+    "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nprogress": "^0.2.0",

@@ -10,6 +10,7 @@ import VueParticles from 'vue-particles'
 import './assets/css/global.css'
 //引入图书管理系统的图标和字体库
 import './assets/fonts/iconfont.css'
+
 // 引入swiper的样式
 // import 'swiper/css/swiper.css'
 //单独引入Message axios拦截器需要
@@ -24,6 +25,9 @@ Vue.use(htmlToPdf)
 import * as echarts from 'echarts'
 // 引入Chrome PassiveEventListeners优化页面性能
 import 'default-passive-events'
+// 引入lodash
+import _ from 'lodash'
+Vue.prototype._ = _  //全局导入的挂载方式
 // 设置全局变量
 Vue.prototype.$echarts = echarts
 
@@ -56,16 +60,17 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   NProgress.done()
   // 登录校验 响应状态码为401时拦截
-  if(response.data.status === 401){
+  if(response.data.status === 401) {
     Message.error("未登录或登录过期，请重新登录");
     // 清除过期的token和原来保存的用户id
     window.sessionStorage.clear();
     // 跳转到登录页面
     router.replace('/login')
-  }else if (response.data.status === 404){
-    Message.error('访问的页面不存在');
-    router.replace('/404');
   }
+  // }else if (response.data.status === 404){
+  //   Message.error('访问的资源或地址不存在');
+  //   router.replace('/404');
+  // }
   return response
 })
 Vue.config.productionTip = false
