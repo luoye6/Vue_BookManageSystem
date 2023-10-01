@@ -8,6 +8,8 @@
 + [项目后端地址](https://gitee.com/falle22222n-leaves/vue_-book-manage-system_backend)
 + [项目部署视频](https://www.bilibili.com/video/BV1314y1Z7SS/?pop_share=1&vd_source=e40a9464b71684502f289cff3f51514f)
 
+​														[![star](https://gitee.com/falle22222n-leaves/vue_-book-manage-system/badge/star.svg?theme=dark)](https://gitee.com/falle22222n-leaves/vue_-book-manage-system)  [![gitee](https://badgen.net/badge/gitee/falle22222n-leaves/red)](https://gitee.com/falle22222n-leaves)  [![fork](http://xxx.xiaobaitiao.club/project/fork.svg)](https://gitee.com/falle22222n-leaves/vue_-book-manage-system/members)  [![github](https://badgen.net/badge/github/github?icon)](https://github.com/luoye6)
+
 ## ☀️个人介绍
 
 ![img](http://xxx.xiaobaitiao.club/project/微信加好友.png)
@@ -57,7 +59,7 @@
 
 + 主要使用Vue2和SpringBoot2实现
 + 项目权限控制分别为：用户借阅，图书管理员，系统管理员
-+ 开发工具：IDEA2022.1.3(真不推荐用eclipse开发，IDEA项目可以导出为eclipse项目，二者不影响，但需要自己学教程) 
++ 开发工具：IDEA2022.1.3(真不推荐用eclipse开发，IDEA项目可以导出为eclipse项目，二者不影响，但需要自己学教程)
 + [IDEA->Eclipse](https://blog.csdn.net/HD202202/article/details/128076400)
 + [Eclipse->IDEA](https://blog.csdn.net/q20010619/article/details/125096051)
 
@@ -289,6 +291,10 @@
 
 ![image-20230311152043122](http://xxx.xiaobaitiao.club/project/%E8%AF%BB%E8%80%85%E7%95%99%E8%A8%80%E6%BC%94%E7%A4%BA.png)
 
+**智能推荐演示**
+
+![image-智能推荐](http://xxx.xiaobaitiao.club/project/image-20230927115859803.png)
+
 ### 图书管理员功能图
 
 **借阅图书演示**
@@ -313,11 +319,17 @@
 
 ### 系统管理员功能图
 
-+ 由于篇幅受限，系统管理员功能图只展示一个图表的功能。
++ 由于篇幅受限，系统功能展示主要功能。
 
 **系统管理演示**
 
 ![image-20230311152338284](http://xxx.xiaobaitiao.club/project/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86.png)
+
+![image-20230927120332940](http://xxx.xiaobaitiao.club/project/image-20230927120332940.png)
+
+**智能分析演示**
+
+![image-智能分析](http://xxx.xiaobaitiao.club/project/image-20230927115859803.png)
 
 ## 🐼部署项目
 
@@ -338,13 +350,13 @@
 + 成功拉取项目（前端后端都是如此)
 + 前端项目注意依赖下载使用npm install 或者 yarn install （Vscode或者Webstorm)
 + 后端项目注意maven依赖下载（IDEA(推荐)或者Ecplise)
-+ 前端npm 镜像源建议淘宝镜像源，后端maven镜像源推荐阿里云镜像源（非必选，但更换后下载快速) 
++ 前端npm 镜像源建议淘宝镜像源，后端maven镜像源推荐阿里云镜像源（非必选，但更换后下载快速)
 
 ## 🐼部署项目问题
 
 ⭐
 
-+ 乱码问题 项目采用的UFT-8 
++ 乱码问题 项目采用的UFT-8
 + 一般出现乱码就是UTF-8和GBK二者相反
 + 请百度IDEA乱码和Eclipse乱码问题(描述清楚即可)
 
@@ -443,3 +455,42 @@
 
 1.11位图书编号可以借，但却**无法进行逾期检查**，发现方法参数还是Integer,上次把借书和还书的改成Long了，逾期查看还没改成Long,因此出现问题，现在已经修复。
 
+### 2023-6-10
+
+**前端更新情况**
+
+1.在某些页面添加全屏功能按钮，**方便用户放大查看表格数据**。
+
+2.增加了GitHub和Gitee的地址图标，**方便进行项目拉取和克隆**。
+
+3.读者留言组件，留言功能进行强化，防止无意义的数字、字母、空格出现在数据，后续考虑
+
+4.读者留言组件，**利用lodash进行节流**，5秒内只可发送一次网络请求，防止恶意刷无效留言。
+
+**后端更新情况**
+
+1.后端添加利用EasyExcel进行图书的**批量导入功能**，实现与实际生活中利用Excel存储一些图书数据的交互功能，**提高导入效率**，和爬虫功能效果相同，都可以实现大数据量情况下的导入，推荐利用EasyExcel进行批量导入，时间会比爬虫会更快。
+
+**Bug修复情况**
+
+1.修改用户页面的修改密码功能，因为上次更新已经加了盐值，但是后端代码逻辑没有进行更改，本次修复"在修改密码后无法登录的情况"，原因是因为后端没有加盐值，已修复。
+
+2.修复系统管理员修改借阅证的密码然后就登录不上了，原因跟第一条Bug是一样的，因为后端的盐值没有进行添加，已修复。
+
+3.修复系统管理员在书籍管理功能时候，直接点击修改书籍，发现书籍的分类是错误的，因为前端只在添加书籍的对话框发了获取分类的请求，修改对话框的时候忘记添加了获取分类的请求，已修复。
+
+### 2023-9
+
+**前端更新情况**
+
+1.增加**智能推荐页面，**能够与AI进行交流**，用户输入自己喜欢xxx类的书籍，AI能够在现有数据库中进行分析，**然后给用户作出推荐**，调用的是国内AI模型，底层是OpenAI。
+
+2.增加**智能分析页面**，输入分析目标和图标类型和Excel文件，AI生成分析结论和可视化图标，大大提高效率，**减少人力分析成本**。
+
+3.增加系统管理员可以利用在前端**利用Excel文件批量上传图书**的功能（测试中),仅供参考。
+
+**后端更新情况**
+
+1.增加智能分析的接口和获取最近5条聊天记录的接口，利用**线程池**和**Future**进行**超时请求处理**，如果接口调用超过40秒直接返回错误信息。
+
+2.利用Google的Guava中的RateLimiter进行限流控制，**每秒钟只允许一个请求通过**，防止刷量行为。
