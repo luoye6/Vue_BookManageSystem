@@ -16,7 +16,7 @@
 + [项目后端地址](https://gitee.com/falle22222n-leaves/vue_-book-manage-system_backend)
 + [项目部署视频](https://www.bilibili.com/video/BV1314y1Z7SS/?pop_share=1&vd_source=e40a9464b71684502f289cff3f51514f)
 
-​														[![star](https://gitee.com/falle22222n-leaves/vue_-book-manage-system/badge/star.svg?theme=dark)](https://gitee.com/falle22222n-leaves/vue_-book-manage-system)  [![gitee](https://badgen.net/badge/gitee/falle22222n-leaves/red)](https://gitee.com/falle22222n-leaves)  [![fork](http://xxx.xiaobaitiao.club/project/fork.svg)](https://gitee.com/falle22222n-leaves/vue_-book-manage-system/members)  [![github](https://badgen.net/badge/github/github?icon)](https://github.com/luoye6)
+​														[![star](https://gitee.com/falle22222n-leaves/vue_-book-manage-system/badge/star.svg?theme=dark)](https://gitee.com/falle22222n-leaves/vue_-book-manage-system)  [![gitee](https://badgen.net/badge/gitee/falle22222n-leaves/red)](https://gitee.com/falle22222n-leaves)  [![github](https://badgen.net/badge/github/github?icon)](https://github.com/luoye6)
 
 ## ☀️个人介绍
 
@@ -396,6 +396,12 @@
 + 看清楚文档的基准地址
 + 要API后端接口文档详细内容和数据库结构+内容一起的，将前后端**star**⭐的截图加我QQ：**909088445**发我即可领取~感谢支持
 
+#### **数据库领取截图示例：**
+
+![](https://pic.yupi.icu/5563/202312042148486.png)
+
+![](https://pic.yupi.icu/5563/202312042148467.png)
+
 ## 🐷其他
 
 + 个人博客地址: https://luoye6.github.io/
@@ -445,7 +451,7 @@
 
 **后端更新情况**
 
-1.防止前端抓包被获取明文密码，前端输入密码，进行md5加密（混合盐值，防止碰撞),后端直接与数据库加密后的密码比较，相等代表登录成功。提高系统**安全性**。
+1.~~防止前端抓包被获取明文密码，前端输入密码，进行md5加密（混合盐值，防止碰撞),后端直接与数据库加密后的密码比较，相等代表登录成功。提高系统**安全性**!~~。
 
 2.整改Controller层，**将业务代码全部放入Service层**，由Controller调用Service服务，并修改了@Transactional注解位置到业务层，减少耦合度，让Controller减少臃肿。做到对扩展开放，对修改关闭。后续考虑运用**设计模式**进行优化代码和**多线程**知识提高在**高并发**下接口响应的速度。
 
@@ -495,7 +501,7 @@
 
 **前端更新情况**
 
-1.增加**智能推荐页面，**能够与AI进行交流**，用户输入自己喜欢xxx类的书籍，AI能够在现有数据库中进行分析，**然后给用户作出推荐**，调用的是国内AI模型，底层是OpenAI。
+1.增加**智能推荐页面，**能够与AI进行交流**，用户输入自己喜欢xxx类的书籍，AI能够在现有数据库中进行分析，**然后给用户作出推荐，调用的是国内AI模型，底层是OpenAI。
 
 2.增加**智能分析页面**，输入分析目标和图标类型和Excel文件，AI生成分析结论和可视化图标，大大提高效率，**减少人力分析成本**。
 
@@ -515,8 +521,12 @@
 
 2.添加一个 IncSyncDeleteAIMessage **定时任务**，每天将会**删除由于系统错误等原因AI回复失败**，导致内容为空的记录，并且会为这些用户**恢复接口的次数**，**后续可能会选择 RabbitMQ**，将失败的消息放入消息队列，然后**确保失败的消息被消费**。
 
+3.登录加密由前端改到后端，由于前端可以被撞库，因此加密依然放到后端。**方案：**前端传输，用 HTTPS 进行密文加密，后端采用盐值+算法进行加密，数据库存密文。
+
 **前端更新情况**
 
 1.将三个登录页面的背景图和头像改为存储在 assets 文件夹的 images 中，**主要是为使用项目的人考虑**，很多人不懂图床技术，我这边暂时将登录页面改成静态图。
 
 2.权限切换的提示优化，**在图标上面现在有登录权限切换的文字样式**，提示用户有多个登录页面可以切换。
+
+3.登录加密由前端改到后端，由于前端可以被撞库，因此加密依然放到后端。**方案：**前端传输，用 HTTPS 进行密文加密，后端采用盐值+算法进行加密，数据库存密文。
