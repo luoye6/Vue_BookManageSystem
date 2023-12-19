@@ -409,6 +409,12 @@
 + 采用butterfly主题可以实现定制化
 + 推荐有空闲时间的，可以花1-2天搭建个人博客用于记录笔记。
 
+## ☕请我喝咖啡
+
+如果本项目对您有所帮助，不妨请作者我喝杯咖啡 ：）
+
+<div><img src="https://pic.yupi.icu/5563/202312191854931.png" style="height:300px;width:300px"></img> <img src="https://pic.yupi.icu/5563/202312191859536.png" style="height:300px;width:300px"></img></div>
+
 ## **版本迭代**
 
 ### 2023-3-19
