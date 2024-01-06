@@ -2,7 +2,7 @@
   <div class="information_container">
     <div class="backgroundImg">
       <img
-        src="http://xxx.xiaobaitiao.club/img/landScapeAndNightMin.png"
+        src="https://xxx.xiaobaitiao.icu/img/icu/202312211243635.jpg"
         alt="背景图片"
       />
     </div>
@@ -13,7 +13,7 @@
         conversation we polish it.
       </p>
     </div>
-    <div class="information_banner" 
+    <div class="information_banner"
     v-loading="loading"
         element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
@@ -60,7 +60,7 @@
           </el-form-item>
           <el-form-item label="新密码" prop="confirmPassword">
             <el-input v-model="editForm.confirmPassword" type="password" placeholder="请再次输入新密码"></el-input>
-          </el-form-item> 
+          </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="editDialogVisible = false">取 消</el-button>
@@ -109,8 +109,8 @@ export default {
         confirmPassword:[
           {validator:validatePass2,trigger:"blur"}
         ]
-        
-    }, 
+
+    },
       editDialogVisible: false,
     show:false,
     loading:true
@@ -135,7 +135,7 @@ export default {
         "user/get_information/" + userId
       );
       if (res.status !== 200) {
-    
+
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -145,10 +145,10 @@ export default {
       this.user = res.data;
       this.show = true;
       this.loading = false;
-  
+
     },
     async changePassword(){
-      
+
       const {data:res} = await this.$http.post('user/update_password',{
         password:this.editForm.password,
         userId:window.sessionStorage.getItem('userId')

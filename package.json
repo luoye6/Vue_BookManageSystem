@@ -11,7 +11,6 @@
   "dependencies": {
     "axios": "^1.2.1",
     "core-js": "^3.8.3",
-    "crypto-js": "^4.1.1",
     "default-passive-events": "^2.0.0",
     "echarts": "^5.4.1",
     "element-ui": "^2.4.5",

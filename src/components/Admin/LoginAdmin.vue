@@ -4,7 +4,7 @@
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="https://xxx.xiaobaitiao.club/img/%E5%B0%8F%E6%81%90%E9%BE%99.png" alt=""/>
+        <img src="https://xxx.xiaobaitiao.icu/img/icu/202312211243634.jpg" alt=""/>
       </div>
       <!-- 登录表单区域 -->
       <el-form
@@ -58,23 +58,33 @@
     >
     </vue-particles>
     <div class="footer">
-      <span><i class="iconfont icon-haoyou" @click="goUser"></i></span>
-      <span>
-        <!-- <i class="iconfont icon-guanliyuan" @click="goAdmin"></i> -->
+       <span style="font-weight: bold;color:white;margin-bottom: 10px">
+        登录页面切换
       </span>
+      <span><i class="iconfont icon-haoyou" @click="goUser"></i></span>
+
     </div>
     <div class="footer2">
-      <p>
-        ©2022-2023 By 小白条<br/><a href="https://beian.miit.gov.cn"
-      >备案号:浙ICP备2022034182号</a
-      >
-      </p>
+      <el-popover placement="top-start" :width="150" trigger="hover">
+        <p slot="reference"> 联系作者|   ©2022-2023 By 小白条<br /> </p>
+        <img
+            src="https://pic.yupi.icu/5563/202312061315664.png"
+            style="height: 100px; width: 100px"
+        />
+      </el-popover>
+      <a href="https://beian.miit.gov.cn">备案号:浙ICP备2023044565号-2 |</a>
+      <a href="https://beian.mps.gov.cn/#/query/webSearch">
+        <img
+            src="https://xxx.xiaobaitiao.icu/img/icu/202312211243636.png"
+            style="height: 16px; width: 16px; margin: 5px 0px 0px 5px"
+        />
+        浙公网安备33028202001002号
+      </a>
     </div>
   </div>
 </template>
 
 <script>
-import CryptoJS from 'crypto-js';
 
 export default {
   data() {
@@ -120,10 +130,8 @@ export default {
           return;
         }
         this.loginLoading = true;
-        // 进行md5加密
-        const salt = "xiaobaitiao";
         const username = this.loginForm.username;
-        const password = CryptoJS.MD5(salt + this.loginForm.password).toString();
+        const password = this.loginForm.password;
         //向数据库发送axios请求，如果登录成功，就跳转
         const {data: res} = await this.$http.post(
             "admin/login",
@@ -132,7 +140,6 @@ export default {
               password
             }
         );
-        // console.log(res);
         if (res.status !== 200) {
           this.loginLoading = false;
           return this.$message.error(res.msg);
@@ -156,7 +163,7 @@ export default {
 .footer2 {
   position: absolute;
   bottom: 0px;
-  left: 45%;
+  left: 35%;
   color: #ccc;
 
   a {
@@ -166,7 +173,7 @@ export default {
 
 .login_container {
   // background-color: #2b4b6b;
-  background: url(http://xxx.xiaobaitiao.club/img/digitalCityMin.png) no-repeat 0px 0px;
+  background: url(https://xxx.xiaobaitiao.icu/img/icu/202312211236280.jpg) no-repeat 0px 0px;
   background-size: cover;
   height: 100%;
 }

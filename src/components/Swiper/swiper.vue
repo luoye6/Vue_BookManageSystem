@@ -1,5 +1,4 @@
-
-  <template>
+<template>
   <!--基础存放容器-->
   <div class="swiper-container">
     <!-- 需要进行轮播的部分 -->
@@ -7,16 +6,16 @@
       <!-- 每个节点 -->
       <div class="swiper-slide">
         <img
-        data-src="https://xxx.xiaobaitiao.club/img/book1.jpg"
-          src="https://xxx.xiaobaitiao.club/img/loading.gif"
+          data-src="https://pic.yupi.icu/5563/202311091857319.jpg"
+          src="https://pic.yupi.icu/5563/202311091902481.gif"
           alt="书籍1"
           class="swiper-lazy"
         />
       </div>
       <div class="swiper-slide">
         <img
-          data-src="https://xxx.xiaobaitiao.club/img/book2.jpg"
-          src="https://xxx.xiaobaitiao.club/img/loading.gif"
+          data-src="https://pic.yupi.icu/5563/202311091857306.jpg"
+          src="https://pic.yupi.icu/5563/202311091902481.gif"
           alt="书籍2"
           class="swiper-lazy"
         />
@@ -24,8 +23,8 @@
       </div>
       <div class="swiper-slide">
         <img
-          data-src="https://xxx.xiaobaitiao.club/img/book3.jpg"
-          src="https://xxx.xiaobaitiao.club/img/loading.gif"
+          data-src="https://pic.yupi.icu/5563/202311091857330.jpg"
+          src="https://pic.yupi.icu/5563/202311091902481.gif"
           alt="书籍3"
           class="swiper-lazy"
         />
@@ -41,8 +40,6 @@
     <div class="swiper-button-next swiper-button-white"></div>
   </div>
 </template>
-
-
 
 <script>
 import swiper from "swiper";
@@ -78,17 +75,15 @@ export default {
         autoplayDisableOnInteraction: false,
         //懒加载
         lazyLoading: true,
-        
-
       });
     },
   },
 };
 </script>
 
-
 <style scoped>
 @import "../../../node_modules/swiper/dist/css/swiper.css";
+
 .swiper-container {
   width: 1000px;
   height: 650px;
@@ -97,6 +92,7 @@ export default {
 
 .swiper-slide img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 </style>

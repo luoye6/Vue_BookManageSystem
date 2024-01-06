@@ -57,6 +57,14 @@ export default {
           duration: 1500
         })
       }
+      // 先判断文本内容是否为空或者是无意义的数字，如果是提示用户信息
+      if (/[\da-zA-Z]/.test(this.inputMessage)) {
+        this.$message.info({
+          message: "请不要输入无意义的内容",
+          duration: 1000
+        });
+        return;
+      }
       if (this.inputMessage.trim() !== "") {
         var userId = window.sessionStorage.getItem("userId");
         this.messages.push({
@@ -71,7 +79,7 @@ export default {
         this.inputMessage = "";
         this.loading = true;
         this.$message.info({
-          message:"文本输入越长，接口调用时间越长，请耐心等待10-20秒",
+          message:"文本输入越长，接口调用时间越长，请耐心等待10秒左右",
           duration:2500
         })
         const {data: res} = await this.$http.post("user/ai_intelligent", this.message)
@@ -127,7 +135,8 @@ export default {
 .main_chat {
   margin-bottom: 10px;
   height: 70vh;
-  background-color: rgba(255, 255, 255, .8);
+  background-size: cover;
+  background: url(https://xxx.xiaobaitiao.icu/img/icu/202312211243632.jpg) no-repeat 0px 0px;
   border-radius: 10px;
   overflow-y: scroll;
 }
