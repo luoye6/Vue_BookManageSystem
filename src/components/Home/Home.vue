@@ -80,7 +80,7 @@
           </el-menu-item>
 <!--          <el-menu-item index="chat" @click="saveNavState('chat')">-->
 <!--            <i class="el-icon-monitor"></i>-->
-<!--            <span slot="title">聊天页面</span>-->
+<!--            <span slot="title">图书反馈</span>-->
 <!--          </el-menu-item>-->
         </el-menu>
       </el-aside>

@@ -69,6 +69,7 @@ export const socket = {
     },
     websocketOnOpen(event) {
         //连接开启后向后台发送消息进行一次心跳检测
+        console.log("WebSocket 启动")
         socket.sendMsg("PING");
     },
     websocketOnError(error) {
