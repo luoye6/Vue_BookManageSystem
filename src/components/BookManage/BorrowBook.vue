@@ -45,9 +45,14 @@ export default {
   methods: {
     async borrowBook(){
       // console.log(this.borrowInfo.borrowDate);
+      if(this.borrowInfo.borrowDate=== ""){
+        return this.$message.error({
+          message:"借阅时间不能为空",
+          duration:1000
+        })
+      }
       this.borrowInfo.bookAdminId = parseInt(window.sessionStorage.getItem('bookAdminId')) 
       const {data:res} = await this.$http.post('bookadmin/borrow_book',this.borrowInfo)
-      // console.log(res);
       if(res.status !== 200){
         return this.$message.error(res.msg)
       }

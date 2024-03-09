@@ -1,9 +1,14 @@
 const { defineConfig } = require('@vue/cli-service')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
- 
+const path = require('path')
 module.exports = defineConfig({
   configureWebpack: {
     plugins: [new NodePolyfillPlugin()],
+    resolve: {
+      alias: {
+        "@": path.resolve("./src") // 相对路径别名配置，使用 @ 代替 src
+      }
+    },
   },
   transpileDependencies: true,
   lintOnSave: false,
@@ -14,6 +19,7 @@ module.exports = defineConfig({
       webSocketURL: 'ws://0.0.0.0/ws',
     },
   },
+ 
   chainWebpack:config =>{
     //发布模式
     config.when(process.env.NODE_ENV === 'production',config =>{

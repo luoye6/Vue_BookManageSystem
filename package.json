@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "dev": "npm run serve",
+    "npm-build": "npm run build"
   },
   "dependencies": {
     "axios": "^1.2.1",
@@ -14,6 +16,7 @@
     "element-ui": "^2.4.5",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
+    "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nprogress": "^0.2.0",

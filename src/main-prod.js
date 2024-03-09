@@ -36,7 +36,7 @@ Vue.use(vueBaberrage)
 //导入axios
 import axios from 'axios'
 //配置请求的根路径
-axios.defaults.baseURL = 'xxxxxxxx服务器地址xxxxx'
+axios.defaults.baseURL = 'http://abc.xiaobaitiao.top:443/api/'
 Vue.prototype.$http = axios
 // const CancelToken = axios.CancelToken;
 // const source = CancelToken.source();
@@ -44,6 +44,9 @@ Vue.prototype.$http = axios
 //导入NProgress包对应的js和CSS
 import  NProgress  from 'nprogress'
 import 'nprogress/nprogress.css'
+// 引入lodash
+import _ from 'lodash'
+Vue.prototype._ = _  //全局导入的挂载方式
 //在request拦截器中，展示进度条NProgress.start()
 axios.interceptors.request.use(config => {
   NProgress.start()

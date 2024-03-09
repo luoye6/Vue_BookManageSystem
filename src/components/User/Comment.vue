@@ -2,7 +2,7 @@
   <div class="comment_container">
     <div class="backgroundImg">
       <img
-        src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/animeboySkyMin.png"
+        src="https://xxx.xiaobaitiao.icu/img/icu/202312211243628.jpg"
         alt=""
       />
     </div>
@@ -17,7 +17,7 @@
         :boxWidth="boxWidth"
         :messageHeight="messageHeight"
         :lanesCount="lanesCount"
-        style="width: 1350px; height: 750px"
+        style="width: 1330px; height: 750px"
       >
       </vue-baberrage>
       <div class="addMain">
@@ -68,7 +68,15 @@ export default {
     };
   },
   methods: {
-    async addContent() {
+   addContent:_.throttle(async function(){
+      // 先判断文本内容是否为空或者是无意义的数字，如果是提示用户信息
+      if(this.input.trim()===''||/^\d+$/.test(this.input)||/^[a-zA-Z]+$/.test(this.input)){
+        this.$message.info({
+          message: "请不要输入无意义的内容",
+          duration:1000
+        })
+        return;
+      }
       // 文本框中内容赋值给barrage
       this.barrage.msg = this.input;
       //向数据库发送请求 addComment
@@ -81,7 +89,7 @@ export default {
       //重置内容框
       this.input = "";
       this.$message.success(res.msg);
-    },
+    },5000,{ trailing: false }),
     async getCommentList() {
       // 发送axios请求
       const { data: res } = await this.$http.get("user/get_commentlist");
@@ -94,9 +102,9 @@ export default {
       //添加空对象，数组更新，组件更新
       this.barrageList.push({})
     },
-   
+
   },
- 
+
   mounted(){
     this.getCommentList();
   }

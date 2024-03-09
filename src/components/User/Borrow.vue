@@ -50,22 +50,46 @@
               >导出Excel</el-button
             >
           </download-excel>
-      
         </el-col>
         <el-col :span="2" style="float: right">
-         
-          <el-button type="primary" class="el-icon-printer" size="mini" @click="downLoad"
+          <el-button
+            type="primary"
+            class="el-icon-printer"
+            size="mini"
+            @click="downLoad"
             >导出PDF</el-button
           >
         </el-col>
+        <el-col :span="2" style="float: right">
+         
+         <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen"
+           >全屏</el-button
+         >
+       </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'cardNumber', order: 'ascending'}">
-        <el-table-column prop="cardNumber" label="借阅编号" sortable> </el-table-column>
-        <el-table-column prop="bookNumber" label="图书编号" sortable> </el-table-column>
-        <el-table-column prop="borrowDate" label="借阅日期" sortable> </el-table-column>
-        <el-table-column prop="closeDate" label="截止日期" sortable> </el-table-column>
-        <el-table-column prop="returnDate" label="归还日期" sortable> </el-table-column>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%"
+        stripe
+        id="pdfDom"
+        :default-sort="{ prop: 'cardNumber', order: 'ascending' }"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
+        <el-table-column prop="cardNumber" label="借阅编号" sortable>
+        </el-table-column>
+        <el-table-column prop="bookNumber" label="图书编号" sortable>
+        </el-table-column>
+        <el-table-column prop="borrowDate" label="借阅日期" sortable>
+        </el-table-column>
+        <el-table-column prop="closeDate" label="截止日期" sortable>
+        </el-table-column>
+        <el-table-column prop="returnDate" label="归还日期" sortable>
+        </el-table-column>
       </el-table>
       <!-- 分页查询区域 -->
       <el-pagination
@@ -106,22 +130,22 @@ export default {
       ],
       tableData: [
         {
-          cardNumber:Number,
-          bookNumber:Number,
-          borrowId:Number,
-          borrowDate:"",
-          closeDate:"",
-          returnDate:"",
-          createTime:"",
-          updateTime:""
-        }
+          cardNumber: Number,
+          bookNumber: Number,
+          borrowId: Number,
+          borrowDate: "",
+          closeDate: "",
+          returnDate: "",
+          createTime: "",
+          updateTime: "",
+        },
       ],
       queryInfo: {
         pageNum: 1,
         pageSize: 5,
         condition: "",
         query: "",
-        cardNumber: window.sessionStorage.getItem('cardNumber'),
+        cardNumber: window.sessionStorage.getItem("cardNumber"),
       },
       total: 0,
       title: "图书借阅表格",
@@ -132,20 +156,22 @@ export default {
         截止日期: "closeDate",
         归还日期: "returnDate",
       },
-     
+      loading: true,
     };
   },
   methods: {
     handleSizeChange(val) {
       this.queryInfo.pageSize = val;
+
       this.searchBookBorrowByPage();
     },
     handleCurrentChange(val) {
       this.queryInfo.pageNum = val;
+
       this.searchBookBorrowByPage();
     },
     async searchBookBorrowByPage() {
-
+      this.loading = true;
       const { data: res } = await this.$http.post(
         "user/get_bookborrow",
         this.queryInfo
@@ -155,6 +181,7 @@ export default {
       // console.log(res);
       if (res.status !== 200) {
         this.total = 0;
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -162,10 +189,23 @@ export default {
         duration: 1000,
       });
       this.tableData = res.data.records;
-      this.total = res.data.total;
+       this.total = parseInt(res.data.total);
+      this.loading = false;
     },
-    downLoad(){
-      this.getPdf(this.title);//参数是下载的pdf文件名
+    downLoad() {
+      this.getPdf(this.title); //参数是下载的pdf文件名
+    },
+    fullScreen(){
+          // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
+    let full = document.fullscreenElement;
+    // 切换为全屏模式
+    if(!full){
+        // 文档根节点的方法requestFullscreen实现全屏模式
+        document.documentElement.requestFullscreen();
+    }else{
+        // 退出全屏模式
+        document.exitFullscreen();
+    }
     }
   },
   created() {

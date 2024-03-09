@@ -36,10 +36,28 @@
             >导出PDF</el-button
           >
         </el-col>
+        <el-col :span="2" style="float: right">
+         
+         <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen"
+           >全屏</el-button
+         >
+       </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'bookAdminId', order: 'ascending'}">
-        <el-table-column prop="bookAdminId" label="ID" sortable> </el-table-column>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%"
+        stripe
+        id="pdfDom"
+        :default-sort="{ prop: 'bookAdminId', order: 'ascending' }"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
+        <el-table-column prop="bookAdminId" label="ID" sortable>
+        </el-table-column>
         <el-table-column prop="username" label="账号"> </el-table-column>
         <el-table-column prop="bookAdminName" label="姓名"> </el-table-column>
         <el-table-column prop="email" label="邮箱"> </el-table-column>
@@ -107,8 +125,12 @@
           <el-form-item label="账号" prop="username">
             <el-input v-model="editForm.username"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password" >
-            <el-input v-model="editForm.password" type="password" show-password></el-input>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              v-model="editForm.password"
+              type="password"
+              show-password
+            ></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="editForm.email"></el-input>
@@ -116,9 +138,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="editDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="updateBookAdmin"
-            >确 定</el-button
-          >
+          <el-button type="primary" @click="updateBookAdmin">确 定</el-button>
         </span>
       </el-dialog>
       <!-- 添加管理员的对话框 -->
@@ -149,9 +169,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="addDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addBookAdmin"
-            >添加管理员</el-button
-          >
+          <el-button type="primary" @click="addBookAdmin">添加管理员</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -263,6 +281,7 @@ export default {
         姓名: "bookAdminName",
         邮箱: "email",
       },
+      loading:true
     };
   },
   methods: {
@@ -276,7 +295,7 @@ export default {
     },
     //让修改公告的对话框可见,并从数据库中回显数据
     async showEditDialog(id) {
-      const {data:res} = await this.$http.get('admin/get_bookadmin/'+id)
+      const { data: res } = await this.$http.get("admin/get_bookadmin/" + id);
       console.log(res);
       if (res.status !== 200) {
         return this.$message.error(res.msg);
@@ -310,7 +329,9 @@ export default {
         return this.$message.info("已经取消删除");
       }
       //如果用户确认删除，那么下一步就是发送axios请求，检查响应状态码是否成功,成功则返回删除成功，否则返回删除失败
-      const {data:res} = await this.$http.delete('admin/delete_bookadmin/'+id)
+      const { data: res } = await this.$http.delete(
+        "admin/delete_bookadmin/" + id
+      );
       if (res.status !== 200) {
         return this.$message.error(res.msg);
       }
@@ -330,9 +351,14 @@ export default {
     },
     // 获取图书管理员列表
     async getBookAdminList() {
-      const {data:res} = await this.$http.post('admin/get_bookadminlist',this.queryInfo)
+      this.loading = true;
+      const { data: res } = await this.$http.post(
+        "admin/get_bookadminlist",
+        this.queryInfo
+      );
       // console.log(res);
       if (res.status !== 200) {
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -340,10 +366,14 @@ export default {
         duration: 1000,
       });
       this.tableData = res.data.records;
-      this.total = res.data.total
+       this.total = parseInt(res.data.total);
+      this.loading = false;
     },
-    async addBookAdmin(){
-      const {data:res} = await this.$http.post("admin/add_bookadmin",this.addForm)
+    async addBookAdmin() {
+      const { data: res } = await this.$http.post(
+        "admin/add_bookadmin",
+        this.addForm
+      );
       // console.log(res);
       if (res.status !== 200) {
         return this.$message.error(res.msg);
@@ -353,10 +383,13 @@ export default {
         duration: 1500,
       });
       this.getBookAdminList();
-      this.addDialogVisible  = false;
+      this.addDialogVisible = false;
     },
-    async updateBookAdmin(){
-      const {data:res} = await this.$http.put('admin/update_bookadmin',this.editForm)
+    async updateBookAdmin() {
+      const { data: res } = await this.$http.put(
+        "admin/update_bookadmin",
+        this.editForm
+      );
       // console.log(res);
       if (res.status !== 200) {
         return this.$message.error(res.msg);
@@ -371,6 +404,18 @@ export default {
     downLoad() {
       this.getPdf(this.title); //参数是下载的pdf文件名
     },
+    fullScreen(){
+          // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
+    let full = document.fullscreenElement;
+    // 切换为全屏模式
+    if(!full){
+        // 文档根节点的方法requestFullscreen实现全屏模式
+        document.documentElement.requestFullscreen();
+    }else{
+        // 退出全屏模式
+        document.exitFullscreen();
+    }
+    }
   },
   created() {
     this.getBookAdminList();

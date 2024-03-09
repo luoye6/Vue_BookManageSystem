@@ -5,7 +5,7 @@
       <!-- 头像区域 -->
       <div class="avatar_box">
         <img
-          src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/newLogo.png"
+          src="https://xxx.xiaobaitiao.icu/img/icu/202312211243634.jpg"
           alt=""
         />
       </div>
@@ -36,7 +36,9 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="login">登录</el-button>
+          <el-button type="primary" @click="login" :loading="loginLoading"
+            >登录
+          </el-button>
           <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -61,22 +63,36 @@
     >
     </vue-particles>
     <div class="footer">
+       <span style="font-weight: bold;color:white;">
+        登录页面切换
+      </span>
       <span><i class="iconfont icon-haoyou" @click="goUser"></i></span>
       <span>
         <i class="iconfont icon-guanliyuanrenzheng" @click="goAdmin"></i>
       </span>
     </div>
     <div class="footer2">
-      <p>
-        ©2022-2022 By 小白条<br /><a href="https://beian.miit.gov.cn"
-          >备案号:浙ICP备2022034182号</a
-        >
-      </p>
+      <el-popover placement="top-start" :width="150" trigger="hover">
+        <p slot="reference"> 联系作者|   ©2022-2023 By 小白条<br /> </p>
+        <img
+            src="https://pic.yupi.icu/5563/202312061315664.png"
+            style="height: 100px; width: 100px"
+        />
+      </el-popover>
+      <a href="https://beian.miit.gov.cn">备案号:浙ICP备2023044565号-2 |</a>
+      <a href="https://beian.mps.gov.cn/#/query/webSearch">
+        <img
+            src="https://xxx.xiaobaitiao.icu/img/icu/202312211243636.png"
+            style="height: 16px; width: 16px; margin: 5px 0px 0px 5px"
+        />
+        浙公网安备33028202001002号
+      </a>
     </div>
   </div>
 </template>
-    
-    <script>
+
+<script>
+
 export default {
   data() {
     return {
@@ -106,6 +122,7 @@ export default {
           },
         ],
       },
+      loginLoading: false,
     };
   },
   methods: {
@@ -119,47 +136,59 @@ export default {
         if (!valid) {
           return;
         }
+        this.loginLoading = true;
+        // 进行md5加密
+        const username = this.loginForm.username;
+        const password = this.loginForm.password;
         //向数据库发送axios请求，如果登录成功，就跳转
-        const {data:res} = await this.$http.post('bookadmin/login',this.loginForm)
+        const { data: res } = await this.$http.post("bookadmin/login", {
+          username,
+          password,
+        });
         // console.log(res);
-        if(res.status !== 200){
-            return this.$message.error(res.msg);
-          }
-        this.$message.success('登录成功')
-        window.sessionStorage.setItem('token',res.map.token)
-          window.sessionStorage.setItem('bookAdminId',res.map.id)
-        this.$router.push('/homemange')
+        if (res.status !== 200) {
+          this.loginLoading = false;
+          return this.$message.error(res.msg);
+        }
+        this.$message.success("登录成功");
+        this.loginLoading = false;
+        window.sessionStorage.setItem("token", res.map.token);
+        window.sessionStorage.setItem("bookAdminId", res.map.id);
+        this.$router.push("/homemange");
         // window.sessionStorage.setItem("token", token);
         // this.$router.push("/home"); //跳转到home页面下
       });
     },
-    goUser(){
-      this.$router.push('/login');
+    goUser() {
+      this.$router.push("/login");
     },
-    goAdmin(){
-      this.$router.push('/loginadmin');
-    }
+    goAdmin() {
+      this.$router.push("/loginadmin");
+    },
   },
 };
 </script>
-    
-    <style lang="less" scoped>
-    .footer2 {
+
+<style lang="less" scoped>
+.footer2 {
   position: absolute;
   bottom: 0px;
-  left: 45%;
+  left: 35%;
   color: #ccc;
+
   a {
     color: #ccc;
   }
 }
+
 .login_container {
   // background-color: #2b4b6b;
-  background: url(https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/digitalCityMin.png)
-    no-repeat 0px 0px;
+  background: url(https://xxx.xiaobaitiao.icu/img/icu/202312211236280.jpg) no-repeat
+    0px 0px;
   background-size: cover;
   height: 100%;
 }
+
 .login_box {
   height: 300px;
   width: 450px;
@@ -169,6 +198,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   .avatar_box {
     width: 130px;
     height: 130px;
@@ -180,6 +210,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
+
     img {
       width: 100%;
       height: 100%;
@@ -188,6 +219,7 @@ export default {
     }
   }
 }
+
 .login_form {
   position: absolute;
   bottom: 0;
@@ -195,10 +227,12 @@ export default {
   padding: 0 20px;
   box-sizing: border-box;
 }
+
 .btns {
   display: flex;
   justify-content: flex-end;
 }
+
 .login_title {
   position: relative;
   top: 5%;
@@ -209,6 +243,7 @@ export default {
   //控制字体间距
   letter-spacing: 10px;
 }
+
 .footer {
   display: flex;
   position: absolute;

@@ -36,9 +36,19 @@
             >导出PDF</el-button
           >
         </el-col>
+        <el-col :span="2" style="float: right">
+         
+         <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen"
+           >全屏</el-button
+         >
+       </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'bookRuleId', order: 'ascending'}">
+      <el-table :data="tableData" border style="width: 100%" stripe id="pdfDom" :default-sort = "{prop: 'bookRuleId', order: 'ascending'}"
+      v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-table-column prop="bookRuleId" label="ID" sortable> </el-table-column>
         <el-table-column prop="bookDays" label="限制天数" sortable> </el-table-column>
         <el-table-column prop="bookLimitNumber" label="限制本数" sortable>
@@ -262,6 +272,7 @@ export default {
         限制图书馆: "bookLimitLibrary",
         逾期费用: "bookOverdueFee",
       },
+      loading:true
     };
   },
   methods: {
@@ -330,11 +341,13 @@ export default {
       this.addDialogVisible = true;
     },
     async getRuleList() {
+      this.loading = true;
       const { data: res } = await this.$http.post(
         "admin/get_rulelist_page",
         this.queryInfo
       );
       if (res.status !== 200) {
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -342,7 +355,8 @@ export default {
         duration: 1000,
       });
       this.tableData = res.data.records;
-      this.total = res.data.total;
+       this.total = parseInt(res.data.total);
+      this.loading = false;
     },
     async addRule() {
       const libraryList = this.addForm.checkList.join(',')
@@ -378,6 +392,18 @@ export default {
     downLoad() {
       this.getPdf(this.title); //参数是下载的pdf文件名
     },
+    fullScreen(){
+          // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
+    let full = document.fullscreenElement;
+    // 切换为全屏模式
+    if(!full){
+        // 文档根节点的方法requestFullscreen实现全屏模式
+        document.documentElement.requestFullscreen();
+    }else{
+        // 退出全屏模式
+        document.exitFullscreen();
+    }
+    }
   },
   created() {
     this.getRuleList();

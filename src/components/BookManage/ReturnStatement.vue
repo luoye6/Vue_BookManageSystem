@@ -60,6 +60,12 @@
             >导出PDF</el-button
           >
         </el-col>
+        <el-col :span="2" style="float: right">
+         
+         <el-button type="success" class="el-icon-full-screen" size="mini" @click="fullScreen"
+           >全屏</el-button
+         >
+       </el-col>
       </el-row>
       <!-- 表格区域 -->
       <el-table
@@ -69,6 +75,10 @@
         stripe
         id="pdfDom"
         :default-sort="{ prop: 'cardNumber', order: 'ascending' }"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
       >
         <el-table-column prop="cardNumber" label="借阅证编号" sortable>
         </el-table-column>
@@ -136,18 +146,22 @@ export default {
         借阅日期: "borrowDate",
         截止日期: "closeDate",
       },
+      loading:true
     };
   },
   methods: {
     handleSizeChange(val) {
       this.queryInfo.pageSize = val;
+
       this.getRuturnStatement();
     },
     handleCurrentChange(val) {
       this.queryInfo.pageNum = val;
+
       this.getRuturnStatement();
     },
     async getRuturnStatement() {
+      this.loading = true;
       const { data: res } = await this.$http.post(
         "bookadmin/get_return_statement",
         this.queryInfo
@@ -157,6 +171,7 @@ export default {
       this.tableData = [];
       if (res.status !== 200) {
         this.total = 0;
+        this.loading = false;
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -164,11 +179,24 @@ export default {
         duration: 1000,
       });
       this.tableData = res.data.records;
-      this.total = res.data.total;
+       this.total = parseInt(res.data.total);
+      this.loading = false;
     },
     downLoad() {
       this.getPdf(this.title); //参数是下载的pdf文件名
     },
+    fullScreen(){
+          // Dom对象的一个属性: 可以用来判断当前是否为全屏模式(trueORfalse)
+    let full = document.fullscreenElement;
+    // 切换为全屏模式
+    if(!full){
+        // 文档根节点的方法requestFullscreen实现全屏模式
+        document.documentElement.requestFullscreen();
+    }else{
+        // 退出全屏模式
+        document.exitFullscreen();
+    }
+    }
   },
   created() {
     this.getRuturnStatement();

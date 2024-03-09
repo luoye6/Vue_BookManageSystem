@@ -2,7 +2,7 @@
   <div class="information_container">
     <div class="backgroundImg">
       <img
-        src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/QQ图片20210618171651.png"
+        src="https://xxx.xiaobaitiao.icu/img/icu/202312211243635.jpg"
         alt="背景图片"
       />
     </div>
@@ -13,9 +13,13 @@
         conversation we polish it.
       </p>
     </div>
-    <div class="information_banner">
-      <div class="information_banner_left">
-        <div class="banner_left_main">
+    <div class="information_banner"
+    v-loading="loading"
+        element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
+      <div class="information_banner_left" >
+        <div class="banner_left_main" v-if="show">
           <div class="number">
             <i class="el-icon-collection-tag"></i> 借阅证编号:
             {{ this.user.cardNumber }}
@@ -35,7 +39,7 @@
         </div>
       </div>
       <div class="information_banner_right">
-        <el-button type="primary" class="changePWD" @click="showEditDialog"
+        <el-button type="primary" class="changePWD" @click="showEditDialog"  v-if="show"
           >修改密码</el-button
         >
       </div>
@@ -56,7 +60,7 @@
           </el-form-item>
           <el-form-item label="新密码" prop="confirmPassword">
             <el-input v-model="editForm.confirmPassword" type="password" placeholder="请再次输入新密码"></el-input>
-          </el-form-item> 
+          </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="editDialogVisible = false">取 消</el-button>
@@ -105,10 +109,11 @@ export default {
         confirmPassword:[
           {validator:validatePass2,trigger:"blur"}
         ]
-        
+
     },
-    
       editDialogVisible: false,
+    show:false,
+    loading:true
     };
   },
   methods: {
@@ -125,10 +130,12 @@ export default {
       // 先从sessionStorage中获取用户id
       const userId = window.sessionStorage.getItem("userId");
       // 发送axios请求，携带用户id，获取个人信息
+      this.loading = true;
       const { data: res } = await this.$http.get(
         "user/get_information/" + userId
       );
       if (res.status !== 200) {
+
         return this.$message.error(res.msg);
       }
       this.$message.success({
@@ -136,8 +143,12 @@ export default {
         duration: 1000,
       });
       this.user = res.data;
+      this.show = true;
+      this.loading = false;
+
     },
     async changePassword(){
+
       const {data:res} = await this.$http.post('user/update_password',{
         password:this.editForm.password,
         userId:window.sessionStorage.getItem('userId')

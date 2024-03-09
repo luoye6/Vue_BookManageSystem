@@ -1,18 +1,34 @@
-
-  <template>
+<template>
   <!--基础存放容器-->
   <div class="swiper-container">
     <!-- 需要进行轮播的部分 -->
     <div class="swiper-wrapper">
       <!-- 每个节点 -->
       <div class="swiper-slide">
-        <img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/banner8.png" alt="图片1" />
+        <img
+          data-src="https://pic.yupi.icu/5563/202311091857319.jpg"
+          src="https://pic.yupi.icu/5563/202311091902481.gif"
+          alt="书籍1"
+          class="swiper-lazy"
+        />
       </div>
       <div class="swiper-slide">
-        <img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/banner9.png" alt="图片2" />
+        <img
+          data-src="https://pic.yupi.icu/5563/202311091857306.jpg"
+          src="https://pic.yupi.icu/5563/202311091902481.gif"
+          alt="书籍2"
+          class="swiper-lazy"
+        />
+        <div class="swiper-lazy-preloader"></div>
       </div>
       <div class="swiper-slide">
-        <img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/5563/banner7.png" alt="图片3" />
+        <img
+          data-src="https://pic.yupi.icu/5563/202311091857330.jpg"
+          src="https://pic.yupi.icu/5563/202311091902481.gif"
+          alt="书籍3"
+          class="swiper-lazy"
+        />
+        <div class="swiper-lazy-preloader"></div>
       </div>
     </div>
 
@@ -25,10 +41,9 @@
   </div>
 </template>
 
-
-
 <script>
 import swiper from "swiper";
+
 export default {
   name: "",
   data() {
@@ -58,15 +73,17 @@ export default {
 
         // 用户中断轮播后续播
         autoplayDisableOnInteraction: false,
+        //懒加载
+        lazyLoading: true,
       });
     },
   },
 };
 </script>
 
-
 <style scoped>
 @import "../../../node_modules/swiper/dist/css/swiper.css";
+
 .swiper-container {
   width: 1000px;
   height: 650px;
@@ -75,6 +92,7 @@ export default {
 
 .swiper-slide img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 </style>
