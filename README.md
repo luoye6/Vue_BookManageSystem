@@ -339,7 +339,7 @@ npm config set registry https://registry.npmmirror.com/
 
 + 主要使用Vue2和SpringBoot2实现
 + 项目权限控制分别为：用户借阅，图书管理员，系统管理员
-+ 开发工具：IDEA2022.1.3(真不推荐用eclipse开发，IDEA项目可以导出为eclipse项目，二者不影响，但需要自己学教程)
++ 开发工具：IDEA2022.1.3(真不推荐用eclipse开发，IDEA项目可以导出为eclipse项目，二者不影响，但需要自己学教程) 
 + [IDEA->Eclipse](https://blog.csdn.net/HD202202/article/details/128076400)
 + [Eclipse->IDEA](https://blog.csdn.net/q20010619/article/details/125096051)
 
@@ -631,13 +631,13 @@ npm config set registry https://registry.npmmirror.com/
 + 成功拉取项目（前端后端都是如此)
 + 前端项目注意依赖下载使用npm install 或者 yarn install （Vscode或者Webstorm)
 + 后端项目注意maven依赖下载（IDEA(推荐)或者Ecplise)
-+ 前端npm 镜像源建议淘宝镜像源，后端maven镜像源推荐阿里云镜像源（非必选，但更换后下载快速)
++ 前端npm 镜像源建议淘宝镜像源，后端maven镜像源推荐阿里云镜像源（非必选，但更换后下载快速) 
 
 ## 🐼部署项目问题
 
 ⭐
 
-+ 乱码问题 项目采用的UFT-8
++ 乱码问题 项目采用的UFT-8 
 + 一般出现乱码就是UTF-8和GBK二者相反
 + 请百度IDEA乱码和Eclipse乱码问题(描述清楚即可)
 
