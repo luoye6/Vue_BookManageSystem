@@ -6,6 +6,8 @@
 >
 >[GitHub 主页](https://github.com/luoye6)
 
+Language：**[English](README_en.md)**| **[中文](README.md).**
+
 ## ☀️新手必读
 
 + 本项目拥有完整的API后台接口文档（文尾)(重点⭐)
