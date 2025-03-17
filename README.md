@@ -11,7 +11,7 @@ Language：**[English](README_en.md)**| **[中文](README.md).**
 ## ☀️新手必读
 
 + 本项目拥有完整的API后台接口文档（文尾)(重点⭐)
-+ 项目部署视频正在录制
++ 未经本人允许擅自将本项目作于商用、竞赛、贩卖源码、毕设擅自改动作者等违法行为，将依法追究法律责任，后果自负，项目已申请软件著作权。
 + 如果项目对您有所帮助，可以Star⭐一下，受到鼓励的我会继续加油。
 + [项目在线演示地址](https://www.xiaobaitiao.top)
 + [项目前端地址](https://gitee.com/falle22222n-leaves/vue_-book-manage-system)
